@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using CQS.Entities;
+using CQSLab.Entities;
 
 namespace CQSLab.Services
 {

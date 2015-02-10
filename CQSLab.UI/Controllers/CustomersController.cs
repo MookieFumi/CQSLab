@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using AutoMapper;
-using CQS.Entities;
+using CQSLab.Entities;
 using CQSLab.Services;
 using CQSLab.UI.ViewModels;
 

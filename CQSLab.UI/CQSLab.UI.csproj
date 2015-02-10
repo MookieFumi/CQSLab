@@ -204,9 +204,9 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CQS.Entities\CQS.Entities.csproj">
+    <ProjectReference Include="..\CQSLab.Entities\CQSLab.Entities.csproj">
       <Project>{7B4D1497-4B89-494A-B8B4-4236EA040B8D}</Project>
-      <Name>CQS.Entities</Name>
+      <Name>CQSLab.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\CQSLab.Services\CQSLab.Services.csproj">
       <Project>{4E8F0E23-2A3E-46C8-9782-B17F757FD31E}</Project>

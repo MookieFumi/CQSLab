@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity.ModelConfiguration;
 
-namespace CQS.Entities.DatabaseInitializers.Configurations
+namespace CQSLab.Entities.DatabaseInitializers.Configurations
 {
     public class OrderLineConfiguration : EntityTypeConfiguration<OrderLine>
     {

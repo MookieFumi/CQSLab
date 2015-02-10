@@ -1,8 +1,7 @@
-namespace CQS.Entities.Migrations
+using System.Data.Entity.Migrations;
+
+namespace CQSLab.Entities.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
     public partial class InitialModel : DbMigration
     {
         public override void Up()

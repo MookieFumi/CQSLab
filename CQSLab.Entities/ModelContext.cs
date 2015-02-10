@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CQS.Entities.DatabaseInitializers.Configurations;
+using CQSLab.Entities.DatabaseInitializers.Configurations;
 
-namespace CQS.Entities
+namespace CQSLab.Entities
 {
     public class ModelContext : DbContext
     {

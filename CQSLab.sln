@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.40121.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQSLab.UI", "CQSLab.UI\CQSLab.UI.csproj", "{11AF3EE5-D370-4A1B-8F5D-45812B42D440}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQS.Entities", "CQS.Entities\CQS.Entities.csproj", "{7B4D1497-4B89-494A-B8B4-4236EA040B8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQSLab.Entities", "CQSLab.Entities\CQSLab.Entities.csproj", "{7B4D1497-4B89-494A-B8B4-4236EA040B8D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQSLab.Services", "CQSLab.Services\CQSLab.Services.csproj", "{4E8F0E23-2A3E-46C8-9782-B17F757FD31E}"
 EndProject

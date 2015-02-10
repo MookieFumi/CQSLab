@@ -1,4 +1,4 @@
-﻿namespace CQS.Entities
+﻿namespace CQSLab.Entities
 {
     public class Customer
     {

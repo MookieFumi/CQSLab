@@ -7,8 +7,8 @@
     <ProjectGuid>{7B4D1497-4B89-494A-B8B4-4236EA040B8D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CQS.Entities</RootNamespace>
-    <AssemblyName>CQS.Entities</AssemblyName>
+    <RootNamespace>CQSLab.Entities</RootNamespace>
+    <AssemblyName>CQSLab.Entities</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

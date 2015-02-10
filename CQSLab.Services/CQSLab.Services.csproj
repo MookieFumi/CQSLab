@@ -65,9 +65,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CQS.Entities\CQS.Entities.csproj">
+    <ProjectReference Include="..\CQSLab.Entities\CQSLab.Entities.csproj">
       <Project>{7B4D1497-4B89-494A-B8B4-4236EA040B8D}</Project>
-      <Name>CQS.Entities</Name>
+      <Name>CQSLab.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

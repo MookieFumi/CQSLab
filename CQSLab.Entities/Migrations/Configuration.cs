@@ -1,18 +1,15 @@
-namespace CQS.Entities.Migrations
-{
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
+using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<CQS.Entities.ModelContext>
+namespace CQSLab.Entities.Migrations
+{
+    internal sealed class Configuration : DbMigrationsConfiguration<ModelContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(CQS.Entities.ModelContext context)
+        protected override void Seed(ModelContext context)
         {
             //  This method will be called after migrating to the latest version.
 
