@@ -1,0 +1,37 @@
+﻿@using CQS.Entities
+@using FluentMvcGrid
+@model IEnumerable<CQS.Entities.Customer>
+
+@{
+    ViewBag.Title = "Customers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Customers</h2>
+
+<p>
+    <div class="btn-group">
+        <button type="button" class="btn btn-default">Actions</button>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li>@Html.ActionLink("Create", "Create")</li>
+        </ul>
+    </div>
+</p>
+
+@(Html.FluentMvcGrid(Model)
+    .Class("table table-bordered table-striped table-hover")
+    .HeadersIfEof(true)
+    .Pagination(pagination => pagination.Enabled(false))
+    .AddColumn("CustomerId", item => item.CustomerId)
+    .AddColumn("Name", item => item.Name)
+    .AddColumn("Surname", item => item.Surname)
+    .AddColumn("Email", item => item.Email)
+    .AddColumn(column => column.HeaderText("Actions")
+        .Format(@<text>
+            @Html.ActionLink("Edit", "Edit", "Customers", new { id = item.CustomerId }, new { @class = "btn btn-primary" })
+        </text>))
+)
