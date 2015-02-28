@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
+using AutoMapper.QueryableExtensions;
 using CQSLab.Entities;
+using CQSLab.Entities.Queries.Result;
 
 namespace CQSLab.Services
 {
@@ -28,9 +30,14 @@ namespace CQSLab.Services
             return Context.Customers.SingleOrDefault(p => p.CustomerId == customerId);
         }
 
-        public IEnumerable<Customer> GetCustomers()
+        public IEnumerable<CustomerQueryResult> GetCustomers()
         {
-            return Context.Customers.ToList();
+            AutoMapper.Mapper.CreateMap<Customer, CustomerQueryResult>();
+
+            return Context.Customers
+                .Project()
+                .To<CustomerQueryResult>()
+                .ToList();
         }
 
         public void UpdateCustomer(Customer customer)

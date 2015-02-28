@@ -2,7 +2,7 @@
 
 namespace CQSLab.UI.ViewModels
 {
-    public class CustomerEditVM : CustomerVM
+    public class CustomerViewModel : CustomerVM
     {
         [Required]
         [Display(Name = "Id")]

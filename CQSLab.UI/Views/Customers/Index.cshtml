@@ -1,5 +1,6 @@
-﻿@using FluentMvcGrid
-@model IEnumerable<CQSLab.Entities.Customer>
+﻿@using CQSLab.Entities.Queries.Result
+@using FluentMvcGrid
+@model IEnumerable<CustomerQueryResult>
 
 @{
     ViewBag.Title = "Customers";
@@ -16,7 +17,7 @@
             <span class="sr-only">Toggle Dropdown</span>
         </button>
         <ul class="dropdown-menu" role="menu">
-            <li>@Html.ActionLink("Create", "Create")</li>
+            <li>@Html.ActionLink("Create", "Create", "Customers", null, new { data_action = "new" })</li>
         </ul>
     </div>
 </p>
