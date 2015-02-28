@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
-using CQSLab.Entities;
+﻿using CQSLab.Entities;
 using CQSLab.Entities.Queries;
 using CQSLab.Entities.Queries.Configuration;
 using CQSLab.Entities.Queries.Result;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Transactions;
 
 namespace CQSLab.Services
 {

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using CQSLab.Entities;
 using CQSLab.Entities.Queries.Configuration;
 using CQSLab.Entities.Queries.Result;

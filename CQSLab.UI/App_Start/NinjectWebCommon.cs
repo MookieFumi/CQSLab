@@ -1,21 +1,18 @@
+using System;
+using System.Web;
+using CQSLab.Entities;
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+using Ninject;
+using Ninject.Web.Common;
 using CQSLab.Services;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(CQSLab.UI.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(CQSLab.UI.App_Start.NinjectWebCommon), "Stop")]
-
 namespace CQSLab.UI.App_Start
 {
-    using System;
-    using System.Web;
-
-    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
-    using Ninject;
-    using Ninject.Web.Common;
-
     public static class NinjectWebCommon 
     {
-        private static readonly Bootstrapper bootstrapper = new Bootstrapper();
+        private static readonly Bootstrapper Bootstrapper = new Bootstrapper();
 
         /// <summary>
         /// Starts the application
@@ -24,7 +21,7 @@ namespace CQSLab.UI.App_Start
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
-            bootstrapper.Initialize(CreateKernel);
+            Bootstrapper.Initialize(CreateKernel);
         }
         
         /// <summary>
@@ -32,7 +29,7 @@ namespace CQSLab.UI.App_Start
         /// </summary>
         public static void Stop()
         {
-            bootstrapper.ShutDown();
+            Bootstrapper.ShutDown();
         }
         
         /// <summary>
@@ -63,9 +60,12 @@ namespace CQSLab.UI.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<IProductsService>().To<ProductsService>();
-            kernel.Bind<ICustomersService>().To<CustomersService>();
-            kernel.Bind<IOrdersService>().To<OrdersService>();
+            DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
+            
+            kernel.Bind<ModelContext>().ToSelf().InRequestScope();
+            kernel.Bind<IProductsService>().To<ProductsService>().InRequestScope();
+            kernel.Bind<ICustomersService>().To<CustomersService>().InRequestScope();
+            kernel.Bind<IOrdersService>().To<OrdersService>().InRequestScope();
         }        
     }
 }

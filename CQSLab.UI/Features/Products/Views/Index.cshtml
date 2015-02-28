@@ -38,5 +38,5 @@
       .AddColumn("Category", item => item.Category)
       .AddColumn(column => column.HeaderText("Actions")
           .Format(@<text>
-                       @Html.ActionLink("Edit", "Edit", "Products", new { id = item.ProductId }, new { @class = "btn btn-primary" })
-                   </text>)))
+            @Html.ActionLink("Edit", "Edit", "Products", new { id = item.ProductId }, new { @class = "btn btn-primary" })
+        </text>)))

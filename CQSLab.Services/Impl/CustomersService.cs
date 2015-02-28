@@ -1,12 +1,10 @@
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Transactions;
-using AutoMapper.QueryableExtensions;
 using CQSLab.Entities;
 using CQSLab.Entities.Queries;
 using CQSLab.Entities.Queries.Configuration;
 using CQSLab.Entities.Queries.Result;
+using System.Data.Entity;
+using System.Linq;
+using System.Transactions;
 
 namespace CQSLab.Services
 {

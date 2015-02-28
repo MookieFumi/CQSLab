@@ -23,7 +23,7 @@ namespace CQSLab.UI.Features.Products
         public ActionResult Index(int page=1)
         {
             var products = _productsService.GetProducts(new QueryConfiguration() { Paging = { PageIndex = page } });
-
+            
             return View(products);
         }
 
