@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using StackExchange.Profiling;
 
 namespace CQSLab.UI.Controllers
 {
@@ -10,6 +11,9 @@ namespace CQSLab.UI.Controllers
     {
         public ActionResult Index()
         {
+            var profiler = MiniProfiler.Current;
+            profiler.Step("MiniProfiler step");
+
             return View();
         }
 

@@ -147,6 +147,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\MiniProfilerController.cs" />
     <Compile Include="Features\Products\ProductsController.cs" />
     <Compile Include="FolderPerFeatureConventionViewEngine.cs" />
     <Compile Include="Helper.cs" />
@@ -212,6 +213,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="ViewModels\" />
+    <Folder Include="Views\MiniProfiler\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
