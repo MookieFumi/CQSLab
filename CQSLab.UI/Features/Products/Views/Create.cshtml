@@ -1,0 +1,58 @@
+﻿@using CQSLab.UI.Features.Products.ViewModels
+@model ProductVM
+
+@{
+    ViewBag.Title = "Products. Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Products. Create</h2>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger" role="alert">@Html.Raw(@ViewBag.Error)</div>
+}
+
+@using (Html.BeginForm("Create", "Products", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="form-group">
+        <label for="@Html.IdFor(p=>p.Name)" class="col-sm-2 control-label">Name</label>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Name" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="@Html.IdFor(p=>p.Description)" class="col-sm-2 control-label">Description</label>
+        <div class="col-sm-10">
+            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Description" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="@Html.IdFor(p=>p.Category)" class="col-sm-2 control-label">Category</label>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.Category, new { @class = "form-control", placeholder = "Category" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="@Html.IdFor(p=>p.Tag)" class="col-sm-2 control-label">Tag</label>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.Tag, new { @class = "form-control", placeholder = "Tag" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="@Html.IdFor(p=>p.ImageUrl)" class="col-sm-2 control-label">ImageUrl</label>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.ImageUrl, new { @class = "form-control", placeholder = "ImageUrl" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            @Html.ActionLink("Back", "Index", "Products", null, new { @class = "btn btn-default" })
+            <button type="submit" data-action="save" class="btn btn-primary">Create</button>
+        </div>
+    </div>
+}

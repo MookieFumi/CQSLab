@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace CQSLab.UI.ViewModels
+namespace CQSLab.UI.Features.Customers.ViewModels
 {
     public class CustomerVM
     {

@@ -1,56 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 using AutoMapper;
 using CQSLab.Entities;
 using CQSLab.Entities.Queries.Configuration;
 using CQSLab.Services;
+using CQSLab.UI.Features.Products.ViewModels;
 using CQSLab.UI.Infrastructure.Attributes;
-using CQSLab.UI.ViewModels;
 
-namespace CQSLab.UI.Controllers
+namespace CQSLab.UI.Features.Products
 {
     [LogActionFilter]
-    public class CustomersController : Controller
+    public class ProductsController : Controller
     {
-        private readonly ICustomersService _customersService;
+        private readonly IProductsService _productsService;
 
-        public CustomersController(ICustomersService customersService)
+        public ProductsController(IProductsService productsService)
         {
-            _customersService = customersService;
+            _productsService = productsService;
         }
 
-        // GET: Customers
+        // GET: Products
         public ActionResult Index(int page=1)
         {
-            var customers = _customersService.GetCustomers(new QueryConfiguration() { Paging = { PageIndex = page } });
+            var products = _productsService.GetProducts(new QueryConfiguration() { Paging = { PageIndex = page } });
 
-            return View(customers);
+            return View(products);
         }
 
-        // GET: Customers/Create
+        // GET: Products/Create
         public ActionResult Create()
         {
-            var viewModel = new CustomerVM();
+            var viewModel = new ProductVM();
 
             return View(viewModel);
         }
 
-        // POST: Customers/Create
+        // POST: Products/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CustomerVM viewModel)
+        public ActionResult Create(ProductVM viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    Mapper.CreateMap<CustomerVM, Customer>();
-                    var customer = Mapper.Map<CustomerVM, Customer>(viewModel);
-                    _customersService.AddCustomer(customer);
+                    Mapper.CreateMap<ProductVM, Product>();
+                    var product = Mapper.Map<ProductVM, Product>(viewModel);
+                    _productsService.AddProduct(product);
 
                     return RedirectToAction("Index");
                 }
@@ -67,7 +63,7 @@ namespace CQSLab.UI.Controllers
             return View(viewModel);
         }
 
-        // GET: Customers/Edit/4
+        // GET: Products/Edit/4
         public ActionResult Edit(int id, bool success = false)
         {
             if (success)
@@ -75,34 +71,34 @@ namespace CQSLab.UI.Controllers
                 ViewBag.Success = true;
             }
 
-            var customer = _customersService.GetCustomer(id);
-            if (customer == null)
+            var product = _productsService.GetProduct(id);
+            if (product == null)
             {
                 return HttpNotFound();
             }
 
-            Mapper.CreateMap<Customer, CustomerEditVM>();
-            var viewModel = Mapper.Map<Customer, CustomerEditVM>(customer);
+            Mapper.CreateMap<Product, ProductEditVM>();
+            var viewModel = Mapper.Map<Product, ProductEditVM>(product);
 
             return View(viewModel);
         }
 
-        // POST: Customers/Edit/4
+        // POST: Products/Edit/4
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(CustomerEditVM editVM)
+        public ActionResult Edit(ProductEditVM editVM)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var customer = _customersService.GetCustomer(editVM.CustomerId);
+                    var product = _productsService.GetProduct(editVM.ProductId);
 
-                    Mapper.CreateMap<CustomerEditVM, Customer>();
-                    Mapper.Map(editVM, customer);
-                    _customersService.UpdateCustomer(customer);
+                    Mapper.CreateMap<ProductEditVM, Product>();
+                    Mapper.Map(editVM, product);
+                    _productsService.UpdateProduct(product);
 
-                    return RedirectToAction("Edit", new { id = editVM.CustomerId, success = true });
+                    return RedirectToAction("Edit", new { id = editVM.ProductId, success = true });
                 }
                 catch (Exception exception)
                 {

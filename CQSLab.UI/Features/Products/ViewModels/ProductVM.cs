@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace CQSLab.UI.ViewModels
+namespace CQSLab.UI.Features.Products.ViewModels
 {
     public class ProductVM
     {
