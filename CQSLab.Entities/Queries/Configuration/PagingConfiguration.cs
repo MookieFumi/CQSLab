@@ -1,3 +1,5 @@
+using CQSLab.CrossCutting;
+
 namespace CQSLab.Entities.Queries.Configuration
 {
     public class PagingConfiguration
@@ -5,8 +7,8 @@ namespace CQSLab.Entities.Queries.Configuration
         public PagingConfiguration()
         {
             Enable = true;
-            PageIndex = 1;
-            PageSize = 10;
+            PageIndex = Constants.DEFAULT_PAGE_INDEX;
+            PageSize = Constants.DEFAULT_PAGE_SIZE;
             FallbackPage = false;
         }
 

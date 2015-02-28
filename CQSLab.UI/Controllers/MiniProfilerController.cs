@@ -9,11 +9,14 @@ namespace CQSLab.UI.Controllers
 {
     public class MiniProfilerController : Controller
     {
+        private const int ONE_DAY = 1;
+
         // GET: MiniProfiler
         public ActionResult On()
         {
             var cookie = new HttpCookie(Strings.CookieMiniProfiler, Strings.On);
-            cookie.Expires.AddDays(double.Parse(In.One.Day.ToString()));
+
+            cookie.Expires.AddDays(ONE_DAY);
             HttpContext.Response.Cookies.Add(cookie);
 
             return RedirectToAction("Index", "Home");
@@ -24,7 +27,7 @@ namespace CQSLab.UI.Controllers
             var cookie = Request.Cookies[Strings.CookieMiniProfiler];
             if (cookie != null)
             {
-                cookie.Expires = DateTime.Now.AddDays(-1);
+                cookie.Expires = DateTime.Now.AddDays(-ONE_DAY);
                 cookie.Value = Strings.Off;
                 Response.Cookies.Add(cookie);
             }

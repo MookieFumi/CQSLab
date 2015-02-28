@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using AutoMapper;
+using CQSLab.CrossCutting;
 using CQSLab.Entities;
 using CQSLab.Entities.Queries.Configuration;
 using CQSLab.Services;
@@ -20,10 +21,10 @@ namespace CQSLab.UI.Features.Products
         }
 
         // GET: Products
-        public ActionResult Index(int page=1)
+        public ActionResult Index(int page = Constants.DEFAULT_PAGE_INDEX)
         {
             var products = _productsService.GetProducts(new QueryConfiguration() { Paging = { PageIndex = page } });
-            
+
             return View(products);
         }
 
