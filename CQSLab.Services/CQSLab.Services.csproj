@@ -41,6 +41,9 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework.Extended">
+      <HintPath>..\packages\EntityFramework.Extended.6.1.0.133\lib\net45\EntityFramework.Extended.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
@@ -57,12 +60,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IChannelsService.cs" />
+    <Compile Include="Impl\ChannelsService.cs" />
     <Compile Include="Impl\CustomersService.cs" />
     <Compile Include="ICustomersService.cs" />
+    <Compile Include="Impl\StoresService.cs" />
     <Compile Include="IOrdersService.cs" />
     <Compile Include="Impl\OrdersService.cs" />
     <Compile Include="Impl\ProductsService.cs" />
     <Compile Include="IProductsService.cs" />
+    <Compile Include="IStoresService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBase.cs" />
   </ItemGroup>
@@ -71,6 +78,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CQSLab.CrossCutting\CQSLab.CrossCutting.csproj">
+      <Project>{F1193852-10C5-474B-B4BB-B0196EC80CE2}</Project>
+      <Name>CQSLab.CrossCutting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CQSLab.Entities\CQSLab.Entities.csproj">
       <Project>{7B4D1497-4B89-494A-B8B4-4236EA040B8D}</Project>
       <Name>CQSLab.Entities</Name>

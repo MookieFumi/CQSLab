@@ -66,6 +66,8 @@ namespace CQSLab.UI.App_Start
             kernel.Bind<IProductsService>().To<ProductsService>().InRequestScope();
             kernel.Bind<ICustomersService>().To<CustomersService>().InRequestScope();
             kernel.Bind<IOrdersService>().To<OrdersService>().InRequestScope();
+            kernel.Bind<IChannelsService>().To<ChannelsService>().InRequestScope();
+            kernel.Bind<IStoresService>().To<StoresService>().InRequestScope();
         }        
     }
 }

@@ -81,14 +81,18 @@
     <Compile Include="OrderLine.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queries\StoresQueries.cs" />
     <Compile Include="Queries\Configuration\OrdernationConfiguration.cs" />
     <Compile Include="Queries\Configuration\PagingConfiguration.cs" />
     <Compile Include="Queries\Configuration\QueryConfiguration.cs" />
+    <Compile Include="Queries\ChannelsQueries.cs" />
     <Compile Include="Queries\ProductsQueries.cs" />
     <Compile Include="Queries\CustomersQueries.cs" />
+    <Compile Include="Queries\Result\ChannelQueryResult.cs" />
     <Compile Include="Queries\Result\ProductQueryResult.cs" />
     <Compile Include="Queries\Result\QueryResult.cs" />
     <Compile Include="Queries\Result\CustomerQueryResult.cs" />
+    <Compile Include="Queries\Result\StoreQueryResult.cs" />
     <Compile Include="Store.cs" />
   </ItemGroup>
   <ItemGroup>

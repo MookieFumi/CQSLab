@@ -1,0 +1,14 @@
+﻿@using System.Collections.Generic
+@model System.Decimal?
+@{
+    var htmlAttributes = new Dictionary<string, object>
+        {
+            { "class", "form-control" },
+            { "data-type", "decimal" },
+            { "decimals", "2" },
+            { "min", "0" },
+        };
+    Utilities.AppendAnonymousObjectToDictionary(htmlAttributes, ViewData["htmlAttributes"]);
+}
+@Html.TextBoxFor(model => model, ViewData.ModelMetadata.EditFormatString, htmlAttributes)
+

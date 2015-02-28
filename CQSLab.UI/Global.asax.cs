@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -25,8 +26,8 @@ namespace CQSLab.UI
 
         protected void Application_BeginRequest()
         {
-            var cookie = Request.Cookies["miniprofiler"];
-            if (cookie != null && cookie.Value == "on")
+            var cookie = Request.Cookies[Strings.CookieMiniProfiler];
+            if (cookie != null && cookie.Value == Strings.On)
             {
                 MiniProfiler.Start();
             }

@@ -6,6 +6,7 @@ namespace CQSLab.Entities
     {
         public Channel()
         {
+            Stores = new HashSet<Store>();
             Budgets = new HashSet<BudgetChannel>();
         }
 
@@ -13,6 +14,7 @@ namespace CQSLab.Entities
         public virtual string Name { get; set; }
         public virtual string Description { get; set; }
 
+        public ICollection<Store> Stores { get; set; }
         public ICollection<BudgetChannel> Budgets { get; set; }
     }
 }

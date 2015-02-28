@@ -27,7 +27,9 @@ namespace CQSLab.Entities
         public DbSet<OrderLine> OrderLines { get; set; }
 
         public DbSet<Channel> Channels { get; set; }
+        public DbSet<BudgetChannel> BudgetsChannel { get; set; }
         public DbSet<Store> Stores { get; set; }
+        public DbSet<BudgetStore> BudgetsStore { get; set; }
 
         #endregion
 

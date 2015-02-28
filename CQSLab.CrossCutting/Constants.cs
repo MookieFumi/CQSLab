@@ -10,5 +10,6 @@ namespace CQSLab.CrossCutting
     {
         public const int DEFAULT_PAGE_INDEX = 1;
         public const int DEFAULT_PAGE_SIZE = 10;
+        public const decimal DEFAULT_BUDGET_VALUE = 0;
     }
 }

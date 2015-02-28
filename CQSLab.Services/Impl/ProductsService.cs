@@ -37,11 +37,6 @@ namespace CQSLab.Services
             return queries.GetProducts(configuration);
         }
 
-        public IEnumerable<Product> GetProducts()
-        {
-            return Context.Products.ToList();
-        }
-
         public void UpdateProduct(Product product)
         {
             Context.Products.Attach(product);

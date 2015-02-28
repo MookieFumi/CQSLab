@@ -1,0 +1,51 @@
+﻿@model CQSLab.UI.Features.Stores.ViewModels.StoreEditVM
+
+@{
+    ViewBag.Title = "Stores. Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Stores. Edit</h2>
+
+@if (ViewBag.Success != null)
+{
+    <div class="alert alert-success" role="alert">Saved successfuly</div>
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger" role="alert">@Html.Raw(@ViewBag.Error)</div>
+}
+
+@using (Html.BeginForm("Edit", "Stores", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.StoreId)
+
+    <div class="form-group">
+        @Html.LabelFor(p => p.ChannelId, new { @class = "col-sm-2 control-label", @for = Html.IdFor(p => p.ChannelId) })
+        <div class="col-sm-10">
+            @Html.DropDownListFor(model => model.ChannelId, new SelectList(Model.Channels, "Value", "Text", Model.ChannelId), new { @class = "form-control", @readonly = "readonly" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Name, new { @class = "col-sm-2 control-label", @for = Html.IdFor(p => p.Name) })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Name" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Description, new { @class = "col-sm-2 control-label", @for = Html.IdFor(p => p.Description) })
+        <div class="col-sm-10">
+            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Description" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            @Html.ActionLink("Back", "Index", "Stores", null, new { @class = "btn btn-default" })
+            <button type="submit" class="btn btn-primary" data-action="save">Save</button>
+        </div>
+    </div>
+}

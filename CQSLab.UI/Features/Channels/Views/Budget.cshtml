@@ -1,0 +1,47 @@
+﻿@using CQSLab.UI.Features.Channels.ViewModels
+@model BudgetEditVM
+
+@{
+    ViewBag.Title = "Budget. Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Budget. Edit</h2>
+
+@if (ViewBag.Success != null)
+{
+    <div class="alert alert-success" role="alert">Saved successfuly</div>
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger" role="alert">@Html.Raw(@ViewBag.Error)</div>
+}
+
+@using (Html.BeginForm("Budget", "Channels", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.ChannelId)
+    @Html.HiddenFor(model => model.AccountantPeriod)
+
+    @Html.GetFormGroup(x => x.January)
+    @Html.GetFormGroup(x => x.February)
+    @Html.GetFormGroup(x => x.March)
+    @Html.GetFormGroup(x => x.April)
+    @Html.GetFormGroup(x => x.May)
+    @Html.GetFormGroup(x => x.June)
+    @Html.GetFormGroup(x => x.July)
+    @Html.GetFormGroup(x => x.August)
+    @Html.GetFormGroup(x => x.September)
+    @Html.GetFormGroup(x => x.October)
+    @Html.GetFormGroup(x => x.November)
+    @Html.GetFormGroup(x => x.December)
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            @Html.ActionLink("Back", "Edit", "Channels", new { id = Model.ChannelId }, new { @class = "btn btn-default" })
+            <button type="submit" class="btn btn-primary" data-action="save">Save</button>
+        </div>
+    </div>
+}
