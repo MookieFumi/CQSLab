@@ -1,0 +1,28 @@
+﻿@model CQSLab.UI.ViewModels.ProductVM
+
+@{
+    ViewBag.Title = "Products. Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Products. Create</h2>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger" role="alert">@Html.Raw(@ViewBag.Error)</div>
+}
+
+@using (Html.BeginForm("Create", "Products", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.Partial("_HeaderData")
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            @Html.ActionLink("Back", "Index", "Products", null, new { @class = "btn btn-default" })
+            <button type="submit" data-action="save" class="btn btn-primary">Create</button>
+        </div>
+    </div>
+}

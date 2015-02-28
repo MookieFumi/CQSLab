@@ -72,7 +72,9 @@
     <Compile Include="Queries\Configuration\OrdernationConfiguration.cs" />
     <Compile Include="Queries\Configuration\PagingConfiguration.cs" />
     <Compile Include="Queries\Configuration\QueryConfiguration.cs" />
+    <Compile Include="Queries\ProductsQueries.cs" />
     <Compile Include="Queries\CustomersQueries.cs" />
+    <Compile Include="Queries\Result\ProductQueryResult.cs" />
     <Compile Include="Queries\Result\QueryResult.cs" />
     <Compile Include="Queries\Result\CustomerQueryResult.cs" />
   </ItemGroup>

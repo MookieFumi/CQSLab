@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using CQSLab.Entities;
+using CQSLab.Entities.Queries.Configuration;
+using CQSLab.Entities.Queries.Result;
 
 namespace CQSLab.Services
 {
@@ -7,7 +9,7 @@ namespace CQSLab.Services
     {
         void AddProduct(Product product);
         Product GetProduct(int productId);
-        IEnumerable<Product> GetProducts();
+        QueryResult<ProductQueryResult> GetProducts(QueryConfiguration configuration);
         void UpdateProduct(Product product);
         void RemoveProduct(int productId);
     }

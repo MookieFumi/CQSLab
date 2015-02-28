@@ -1,0 +1,42 @@
+﻿@using CQSLab.Entities.Queries.Result
+@using FluentMvcGrid
+@model QueryResult<ProductQueryResult>
+
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Products</h2>
+
+<p>
+    <div class="btn-group">
+        <button type="button" class="btn btn-default">Actions</button>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li>@Html.ActionLink("Create", "Create", "Products", null, new { data_action = "new" })</li>
+        </ul>
+    </div>
+</p>
+
+@(Html.FluentMvcGrid(Model.Data)
+      .Class("table table-bordered table-striped table-hover")
+      .HeadersIfEof(true)
+      .Pagination(pagination => pagination.Enabled(true)
+          .PageIndex(Model.Configuration.Paging.PageIndex)
+          .PageSize(Model.Configuration.Paging.PageSize)
+          .TotalCount(Model.Count)
+          .Sizing(PaginationSizing.Large)
+          .NumericLinksCount(5)
+          .Info(true)
+          .Attributes(new { @class = "float-right" }))
+      .AddColumn("Name", item => item.Name)
+      .AddColumn("Description", item => item.Description)
+      .AddColumn("Category", item => item.Category)
+      .AddColumn(column => column.HeaderText("Actions")
+          .Format(@<text>
+                       @Html.ActionLink("Edit", "Edit", "Products", new { id = item.ProductId }, new { @class = "btn btn-primary" })
+                   </text>)))

@@ -7,12 +7,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using CQSLab.Entities;
+using CQSLab.Entities.Queries;
+using CQSLab.Entities.Queries.Configuration;
+using CQSLab.Entities.Queries.Result;
 
 namespace CQSLab.Services
 {
     public class ProductsService : ServiceBase, IProductsService
     {
-        public ProductsService(ModelContext context) : base(context)
+        public ProductsService(ModelContext context)
+            : base(context)
         {
         }
 
@@ -29,6 +33,12 @@ namespace CQSLab.Services
         public Product GetProduct(int productId)
         {
             return Context.Products.SingleOrDefault(p => p.ProductId == productId);
+        }
+
+        public QueryResult<ProductQueryResult> GetProducts(QueryConfiguration configuration)
+        {
+            var queries = new ProductsQueries(Context);
+            return queries.GetProducts(configuration);
         }
 
         public IEnumerable<Product> GetProducts()
