@@ -26,6 +26,8 @@ namespace CQSLab.Entities
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderLine> OrderLines { get; set; }
 
+        public DbSet<Channel> Channels { get; set; }
+        public DbSet<Store> Stores { get; set; }
 
         #endregion
 
@@ -39,6 +41,10 @@ namespace CQSLab.Entities
             modelBuilder.Configurations.Add(new CustomerConfiguration());
             modelBuilder.Configurations.Add(new OrderConfiguration());
             modelBuilder.Configurations.Add(new OrderLineConfiguration());
+            modelBuilder.Configurations.Add(new ChannelConfiguration());
+            modelBuilder.Configurations.Add(new StoreConfiguration());
+            modelBuilder.Configurations.Add(new BudgetChannelConfiguration());
+            modelBuilder.Configurations.Add(new BudgetStoreConfiguration());
         }
 
         private static void RemoveConventions(DbModelBuilder modelBuilder)
