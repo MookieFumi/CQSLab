@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Humanizer;
 
 namespace CQSLab.UI.Controllers
 {
@@ -11,8 +12,8 @@ namespace CQSLab.UI.Controllers
         // GET: MiniProfiler
         public ActionResult On()
         {
-            var cookie = new HttpCookie("miniprofiler", "on");
-            cookie.Expires.AddDays(1);
+            var cookie = new HttpCookie(Strings.CookieMiniProfiler, Strings.On);
+            cookie.Expires.AddDays(double.Parse(In.One.Day.ToString()));
             HttpContext.Response.Cookies.Add(cookie);
 
             return RedirectToAction("Index", "Home");
@@ -20,13 +21,11 @@ namespace CQSLab.UI.Controllers
 
         public ActionResult Off()
         {
-            if (Request.Cookies["miniprofiler"] != null)
+            var cookie = Request.Cookies[Strings.CookieMiniProfiler];
+            if (cookie != null)
             {
-                var cookie = new HttpCookie("miniprofiler")
-                {
-                    Expires = DateTime.Now.AddDays(-1),
-                    Value = "off"
-                };
+                cookie.Expires = DateTime.Now.AddDays(-1);
+                cookie.Value = Strings.Off;
                 Response.Cookies.Add(cookie);
             }
             return RedirectToAction("Index", "Home");
