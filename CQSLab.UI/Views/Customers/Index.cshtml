@@ -1,6 +1,6 @@
 ﻿@using CQSLab.Entities.Queries.Result
 @using FluentMvcGrid
-@model IEnumerable<CustomerQueryResult>
+@model QueryResult<CustomerQueryResult>
 
 @{
     ViewBag.Title = "Customers";
@@ -22,16 +22,22 @@
     </div>
 </p>
 
-@(Html.FluentMvcGrid(Model)
-    .Class("table table-bordered table-striped table-hover")
-    .HeadersIfEof(true)
-    .Pagination(pagination => pagination.Enabled(false))
-    .AddColumn("CustomerId", item => item.CustomerId)
-    .AddColumn("Name", item => item.Name)
-    .AddColumn("Surname", item => item.Surname)
-    .AddColumn("Email", item => item.Email)
-    .AddColumn(column => column.HeaderText("Actions")
-        .Format(@<text>
-            @Html.ActionLink("Edit", "Edit", "Customers", new { id = item.CustomerId }, new { @class = "btn btn-primary" })
-        </text>))
-)
+@(Html.FluentMvcGrid(Model.Data)
+      .Class("table table-bordered table-striped table-hover")
+      .HeadersIfEof(true)
+      .Pagination(pagination => pagination.Enabled(true)
+          .PageIndex(Model.Configuration.Paging.PageIndex)
+          .PageSize(Model.Configuration.Paging.PageSize)
+          .TotalCount(Model.Count)
+          .Sizing(PaginationSizing.Large)
+          .NumericLinksCount(5)
+          .Info(true)
+          .Attributes(new { @class = "float-right" }))
+      .AddColumn("CustomerId", item => item.CustomerId)
+      .AddColumn("Name", item => item.Name)
+      .AddColumn("Surname", item => item.Surname)
+      .AddColumn("Email", item => item.Email)
+      .AddColumn(column => column.HeaderText("Actions")
+          .Format(@<text>
+                       @Html.ActionLink("Edit", "Edit", "Customers", new { id = item.CustomerId }, new { @class = "btn btn-primary" })
+                   </text>)))

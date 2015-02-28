@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using AutoMapper;
 using CQSLab.Entities;
+using CQSLab.Entities.Queries.Configuration;
 using CQSLab.Services;
 using CQSLab.UI.Infrastructure.Attributes;
 using CQSLab.UI.ViewModels;
@@ -23,9 +24,9 @@ namespace CQSLab.UI.Controllers
         }
 
         // GET: Customers
-        public ActionResult Index()
+        public ActionResult Index(int page=1)
         {
-            var customers = _customersService.GetCustomers();
+            var customers = _customersService.GetCustomers(new QueryConfiguration() { Paging = { PageIndex = page } });
 
             return View(customers);
         }
@@ -67,7 +68,7 @@ namespace CQSLab.UI.Controllers
         }
 
         // GET: Customers/Edit/4
-        public ActionResult Edit(int id, bool success=false)
+        public ActionResult Edit(int id, bool success = false)
         {
             if (success)
             {
@@ -101,7 +102,7 @@ namespace CQSLab.UI.Controllers
                     Mapper.Map(viewModel, customer);
                     _customersService.UpdateCustomer(customer);
 
-                    return RedirectToAction("Edit", new { id = viewModel.CustomerId, success=true });
+                    return RedirectToAction("Edit", new { id = viewModel.CustomerId, success = true });
                 }
                 catch (Exception exception)
                 {
@@ -117,5 +118,5 @@ namespace CQSLab.UI.Controllers
         }
     }
 
-   
+
 }
