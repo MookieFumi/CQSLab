@@ -1,13 +1,12 @@
-﻿using CQSLab.Entities;
+﻿using System.Data.Entity;
+using System.Linq;
+using System.Transactions;
+using CQSLab.Entities;
 using CQSLab.Entities.Queries;
 using CQSLab.Entities.Queries.Configuration;
 using CQSLab.Entities.Queries.Result;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Transactions;
 
-namespace CQSLab.Services
+namespace CQSLab.Services.Impl
 {
     public class ProductsService : ServiceBase, IProductsService
     {
@@ -15,6 +14,8 @@ namespace CQSLab.Services
             : base(context)
         {
         }
+
+        #region IProductsService members
 
         public void AddProduct(Product product)
         {
@@ -37,6 +38,13 @@ namespace CQSLab.Services
             return queries.GetProducts(configuration);
         }
 
+        public void RemoveProduct(int productId)
+        {
+            var product = GetProduct(productId);
+            Context.Products.Remove(product);
+            Context.SaveChanges();
+        }
+
         public void UpdateProduct(Product product)
         {
             Context.Products.Attach(product);
@@ -44,11 +52,6 @@ namespace CQSLab.Services
             Context.SaveChanges();
         }
 
-        public void RemoveProduct(int productId)
-        {
-            var product = GetProduct(productId);
-            Context.Products.Remove(product);
-            Context.SaveChanges();
-        }
+        #endregion
     }
 }

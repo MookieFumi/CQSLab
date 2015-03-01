@@ -1,12 +1,12 @@
+using System.Data.Entity;
+using System.Linq;
+using System.Transactions;
 using CQSLab.Entities;
 using CQSLab.Entities.Queries;
 using CQSLab.Entities.Queries.Configuration;
 using CQSLab.Entities.Queries.Result;
-using System.Data.Entity;
-using System.Linq;
-using System.Transactions;
 
-namespace CQSLab.Services
+namespace CQSLab.Services.Impl
 {
     public class CustomersService : ServiceBase, ICustomersService
     {
@@ -14,6 +14,8 @@ namespace CQSLab.Services
             : base(context)
         {
         }
+
+        #region ICustomersService members
 
         public void AddCustomer(Customer customer)
         {
@@ -36,6 +38,13 @@ namespace CQSLab.Services
             return queries.GetCustomers(configuration);
         }
 
+        public void RemoveCustomer(int customerId)
+        {
+            var customer = GetCustomer(customerId);
+            Context.Customers.Remove(customer);
+            Context.SaveChanges();
+        }
+
         public void UpdateCustomer(Customer customer)
         {
             Context.Customers.Attach(customer);
@@ -43,11 +52,6 @@ namespace CQSLab.Services
             Context.SaveChanges();
         }
 
-        public void RemoveCustomer(int customerId)
-        {
-            var customer = GetCustomer(customerId);
-            Context.Customers.Remove(customer);
-            Context.SaveChanges();
-        }
+        #endregion
     }
 }

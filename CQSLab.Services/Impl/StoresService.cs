@@ -1,15 +1,15 @@
-using AutoMapper;
-using CQSLab.Entities;
-using CQSLab.Entities.Queries;
-using CQSLab.Entities.Queries.Configuration;
-using CQSLab.Entities.Queries.Result;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
+using AutoMapper;
+using CQSLab.Entities;
+using CQSLab.Entities.Queries;
+using CQSLab.Entities.Queries.Configuration;
+using CQSLab.Entities.Queries.Result;
 
-namespace CQSLab.Services
+namespace CQSLab.Services.Impl
 {
     public class StoresService : ServiceBase, IStoresService
     {
@@ -17,6 +17,8 @@ namespace CQSLab.Services
             : base(context)
         {
         }
+
+        #region IStoresService members
 
         public void AddStore(Store store)
         {
@@ -29,12 +31,11 @@ namespace CQSLab.Services
             }
         }
 
-        private void AddBudgetForCurrentPeriod(Store store)
+        public Dictionary<int, string> GetChannels()
         {
-            Mapper.CreateMap<BudgetChannel, BudgetStore>();
-            var budgetChannel = Context.BudgetsChannel.FirstOrDefault(p => p.AccountantPeriod == DateTime.Now.Year);
-            var budgetStore = AutoMapper.Mapper.Map<BudgetChannel, BudgetStore>(budgetChannel);
-            store.Budgets.Add(budgetStore);
+            return Context.Channels
+                .Select(p => new { p.ChannelId, p.Name })
+                .ToDictionary(prop => prop.ChannelId, prop => prop.Name);
         }
 
         public Store GetStore(int storeId)
@@ -48,13 +49,6 @@ namespace CQSLab.Services
             return queries.GetStores(configuration);
         }
 
-        public void UpdateStore(Store store)
-        {
-            Context.Stores.Attach(store);
-            Context.Entry(store).State = EntityState.Modified;
-            Context.SaveChanges();
-        }
-
         public void RemoveStore(int storeId)
         {
             var store = GetStore(storeId);
@@ -62,11 +56,21 @@ namespace CQSLab.Services
             Context.SaveChanges();
         }
 
-        public Dictionary<int, string> GetChannels()
+        public void UpdateStore(Store store)
         {
-            return Context.Channels
-                .Select(p => new { p.ChannelId, p.Name })
-                .ToDictionary(prop => prop.ChannelId, prop => prop.Name);
+            Context.Stores.Attach(store);
+            Context.Entry(store).State = EntityState.Modified;
+            Context.SaveChanges();
+        }
+
+        #endregion
+
+        private void AddBudgetForCurrentPeriod(Store store)
+        {
+            Mapper.CreateMap<BudgetChannel, BudgetStore>();
+            var budgetChannel = Context.BudgetsChannel.FirstOrDefault(p => p.AccountantPeriod == DateTime.Now.Year);
+            var budgetStore = Mapper.Map<BudgetChannel, BudgetStore>(budgetChannel);
+            store.Budgets.Add(budgetStore);
         }
     }
 }

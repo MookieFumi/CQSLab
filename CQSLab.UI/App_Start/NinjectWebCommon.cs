@@ -1,6 +1,7 @@
 using System;
 using System.Web;
 using CQSLab.Entities;
+using CQSLab.Services.Impl;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject;
 using Ninject.Web.Common;

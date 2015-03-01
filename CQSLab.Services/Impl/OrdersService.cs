@@ -4,7 +4,7 @@ using System.Linq;
 using System.Transactions;
 using CQSLab.Entities;
 
-namespace CQSLab.Services
+namespace CQSLab.Services.Impl
 {
     public class OrdersService : ServiceBase, IOrdersService
     {
@@ -13,11 +13,23 @@ namespace CQSLab.Services
         {
         }
 
+        #region IOrdersService members
+
         public void AddOrder(Order order)
         {
             using (var tran = new TransactionScope())
             {
                 Context.Orders.Add(order);
+                Context.SaveChanges();
+                tran.Complete();
+            }
+        }
+
+        public void AddOrderLine(OrderLine orderLine)
+        {
+            using (var tran = new TransactionScope())
+            {
+                Context.OrderLines.Add(orderLine);
                 Context.SaveChanges();
                 tran.Complete();
             }
@@ -33,13 +45,6 @@ namespace CQSLab.Services
             return Context.Orders.ToList();
         }
 
-        public void UpdateOrder(Order order)
-        {
-            Context.Orders.Attach(order);
-            Context.Entry(order).State = EntityState.Modified;
-            Context.SaveChanges();
-        }
-
         public void RemoveOrder(int orderId)
         {
             var order = GetOrder(orderId);
@@ -47,14 +52,13 @@ namespace CQSLab.Services
             Context.SaveChanges();
         }
 
-        public void AddOrderLine(OrderLine orderLine)
+        public void UpdateOrder(Order order)
         {
-            using (var tran = new TransactionScope())
-            {
-                Context.OrderLines.Add(orderLine);
-                Context.SaveChanges();
-                tran.Complete();
-            }
+            Context.Orders.Attach(order);
+            Context.Entry(order).State = EntityState.Modified;
+            Context.SaveChanges();
         }
+
+        #endregion
     }
 }
