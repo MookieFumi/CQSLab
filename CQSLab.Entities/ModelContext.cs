@@ -2,6 +2,7 @@
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using CQSLab.Entities.DatabaseInitializers.Configurations;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CQSLab.Entities
 {

@@ -1,30 +1,35 @@
 using System;
 using System.Web;
 using CQSLab.Entities;
-using CQSLab.Services.Impl;
+using CQSLab.Services;
+using CQSLab.UI;
+using CQSLab.UI.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Owin.Security;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject;
+using Ninject.Extensions.Conventions;
 using Ninject.Web.Common;
-using CQSLab.Services;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(CQSLab.UI.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(CQSLab.UI.App_Start.NinjectWebCommon), "Stop")]
-namespace CQSLab.UI.App_Start
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(NinjectWebCommon), "Stop")]
+namespace CQSLab.UI
 {
-    public static class NinjectWebCommon 
+    public static class NinjectWebCommon
     {
         private static readonly Bootstrapper Bootstrapper = new Bootstrapper();
 
         /// <summary>
         /// Starts the application
         /// </summary>
-        public static void Start() 
+        public static void Start()
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
             Bootstrapper.Initialize(CreateKernel);
         }
-        
+
         /// <summary>
         /// Stops the application.
         /// </summary>
@@ -32,7 +37,7 @@ namespace CQSLab.UI.App_Start
         {
             Bootstrapper.ShutDown();
         }
-        
+
         /// <summary>
         /// Creates the kernel that will manage your application.
         /// </summary>
@@ -62,13 +67,17 @@ namespace CQSLab.UI.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
-            
+
             kernel.Bind<ModelContext>().ToSelf().InRequestScope();
-            kernel.Bind<IProductsService>().To<ProductsService>().InRequestScope();
-            kernel.Bind<ICustomersService>().To<CustomersService>().InRequestScope();
-            kernel.Bind<IOrdersService>().To<OrdersService>().InRequestScope();
-            kernel.Bind<IChannelsService>().To<ChannelsService>().InRequestScope();
-            kernel.Bind<IStoresService>().To<StoresService>().InRequestScope();
-        }        
+
+            kernel.Bind<SecurityContext>().ToSelf().InRequestScope();
+            kernel.Bind<IAuthenticationManager>().ToMethod(c => HttpContext.Current.GetOwinContext().Authentication).InRequestScope();
+            //kernel.Bind<UserManager<ApplicationUser>>().ToMethod(context => Startup.UserManagerFactory());
+            //kernel.Bind(typeof(IUserStore<ApplicationUser>)).To(typeof(UserStore<ApplicationUser>)).InRequestScope();
+
+            kernel.Bind(x => x.FromAssemblyContaining<IProductsService>()
+                .SelectAllClasses()
+                .BindAllInterfaces());
+        }
     }
 }

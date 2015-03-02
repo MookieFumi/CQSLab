@@ -10,6 +10,7 @@ using CQSLab.UI.Infrastructure.Attributes;
 
 namespace CQSLab.UI.Features.Channels
 {
+    [Authorize]
     [LogActionFilter]
     public class ChannelsController : Controller
     {

@@ -12,6 +12,7 @@ using CQSLab.UI.Infrastructure.Attributes;
 
 namespace CQSLab.UI.Features.Stores
 {
+    [Authorize]
     [LogActionFilter]
     public class StoresController : Controller
     {

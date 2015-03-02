@@ -28,6 +28,11 @@ textarea {
 }
 
 
+
+
+/* CUSTOM*/
+
+
 .bs-callout-danger {
     border-left-color: red !important;
 }
@@ -44,3 +49,23 @@ textarea {
 .float-right {
     float: right;
 }
+
+.dropdown-menu form {
+    width: 100%;
+}
+
+    .dropdown-menu form a {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-weight: normal;
+        line-height: 1.428571429;
+        color: #333333;
+        white-space: nowrap;
+    }
+
+        .dropdown-menu form a:hover {
+            color: #ffffff;
+            text-decoration: none;
+            background-color: #428bca;
+        }

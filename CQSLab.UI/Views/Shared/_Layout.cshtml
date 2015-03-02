@@ -1,5 +1,23 @@
 ﻿@using System
 @using StackExchange.Profiling
+
+@helper GetMiniProfilerActionLink()
+{
+    if (Helper.IsMiniProfilerActivated())
+    {
+        <li>
+            @Html.ActionLink("Profile off", "Off", "MiniProfiler")
+
+        </li>
+    }
+    else
+    {
+        <li>
+            @Html.ActionLink("Profile on", "On", "MiniProfiler")
+
+        </li>
+    }
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,25 +29,63 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
-            <div class="navbar-header">
+            <div class="navbar-header pull-left">
+                @Html.ActionLink("CQSLab", "Index", "Home", null, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-header pull-right">
+                <ul class="nav navbar-nav pull-left">
+                    <li>
+                        @if (!Helper.IsAuthenticated())
+                        {
+                            @Html.ActionLink("Log in", "Login", "Account", new { returnUrl = Url.AbsolutePath(Url.Action("Index", "Home")) }, null)
+                        }
+                    </li>
+                    @if (Helper.IsAuthenticated())
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">@Helper.GetIdentityName() <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>@Html.ActionLink("Change profile", "EditProfile", "Account")</li>
+                                <li>@Html.PostLink("Log offf", "LogOff", "Account", null, null, string.Empty)</li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("CQSLab", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @GetMiniProfilerActionLink()
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Common <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("View Customers", "Index", "Customers")</li>
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("View Products", "Index", "Products")</li>
+                        </ul>
+                    </li>
+                    @if (Helper.IsAuthenticated())
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Authorize <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li class="dropdown-header">DP options</li>
+                                <li>@Html.ActionLink("View Channels", "Index", "Channels")</li>
+                                <li>@Html.ActionLink("View Stores", "Index", "Stores")</li>
+                            </ul>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
-    </div>
+    </nav>
+
     <div class="container body-content">
         @if (ViewBag.ReadOnly != null && ViewBag.ReadOnly)
         {

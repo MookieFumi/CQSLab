@@ -1,0 +1,54 @@
+﻿@model CQSLab.UI.Features.Account.ViewModels.ApplicationUserVM
+
+@{
+    ViewBag.Title = "Edit profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit profile</h2>
+
+@if (ViewBag.Success != null)
+{
+    <div class="alert alert-success" role="alert">Saved successfuly</div>
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger" role="alert">@Html.Raw(@ViewBag.Error)</div>
+}
+
+@using (Html.BeginForm("EditProfile", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.UserName)
+    @Html.HiddenFor(model => model.Email)
+    @Html.HiddenFor(model => model.ProviderName)
+
+    <div class="form-group">
+        @Html.LabelFor(p => p.Name, new { @class = "col-sm-2 control-label", @for = Html.IdFor(p => p.Name) })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Name" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Surname, new { @class = "col-sm-2 control-label", @for = Html.IdFor(p => p.Surname) })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.Surname, new { @class = "form-control", placeholder = "Surname" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Company, new { @class = "col-sm-2 control-label", @for = Html.IdFor(p => p.Company) })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.Company, new { @class = "form-control", placeholder = "Company" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            @Html.ActionLink("Back", "Index", "Stores", null, new { @class = "btn btn-default" })
+            <button type="submit" class="btn btn-primary" data-action="save">Save</button>
+        </div>
+    </div>
+}
