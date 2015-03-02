@@ -45,10 +45,20 @@
                     @if (Helper.IsAuthenticated())
                     {
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">@Helper.GetIdentityName() <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
+                                @{var profileImage = @Helper.GetUserProfileImage();}
+                                @if (!string.IsNullOrWhiteSpace(profileImage))
+                                {
+                                    <img src="data:image;base64,@profileImage" alt="" class="img-rounded profile-image" />
+                                }
+                                @Helper.GetIdentityName()
+                                <span class="caret"></span>
+                            </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li>@Html.ActionLink("Change profile", "EditProfile", "Account")</li>
-                                <li>@Html.PostLink("Log offf", "LogOff", "Account", null, null, string.Empty)</li>
+                                <li>
+                                    @Html.ActionLink("Change profile", "EditProfile", "Account")
+                                </li>
+                                <li>@Html.PostLink("Log off", "LogOff", "Account", null, null, string.Empty)</li>
                             </ul>
                         </li>
                     }
@@ -86,7 +96,7 @@
         </div>
     </nav>
 
-    <div class="container body-content">
+    <div class="container body-content margin-top-40">
         @if (ViewBag.ReadOnly != null && ViewBag.ReadOnly)
         {
             <div class="bs-callout bs-callout-danger" id="callout-helper-context-color-specificity">
@@ -94,10 +104,19 @@
                 <p>If you need more functionality you should consult your system administrator</p>
             </div>
         }
+        @if (ViewBag.Success != null)
+        {
+            <div class="alert alert-success" role="alert">Saved successfuly</div>
+        }
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger" role="alert">@Html.Raw(@ViewBag.Error)</div>
+        }
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Tab Consultores</p>
+            <p><span class="label label-primary">&copy; @DateTime.Now.Year - Tab Consultores.</span> <span class="label label-primary">Miguel Ángel Martín Hernández (MookieFumi)</span></p>
         </footer>
     </div>
 

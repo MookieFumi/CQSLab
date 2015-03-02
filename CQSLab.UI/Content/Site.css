@@ -32,6 +32,21 @@ textarea {
 
 /* CUSTOM*/
 
+.navbar-nav li a, .navbar-brand {
+    line-height: 50px !important;
+}
+
+.profile-image {
+    width: 50px;
+}
+
+.margin-top-40 {
+    margin-top: 40px;
+}
+
+.float-right {
+    float: right;
+}
 
 .bs-callout-danger {
     border-left-color: red !important;
@@ -44,10 +59,6 @@ textarea {
     border-left-width: 5px;
     -ms-border-radius: 3px;
     border-radius: 3px;
-}
-
-.float-right {
-    float: right;
 }
 
 .dropdown-menu form {

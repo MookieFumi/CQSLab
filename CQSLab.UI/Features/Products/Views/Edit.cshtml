@@ -8,16 +8,6 @@
 
 <h2>Products. Edit</h2>
 
-@if (ViewBag.Success != null)
-{
-    <div class="alert alert-success" role="alert">Saved successfuly</div>
-}
-
-@if (ViewBag.Error != null)
-{
-    <div class="alert alert-danger" role="alert">@Html.Raw(@ViewBag.Error)</div>
-}
-
 @using (Html.BeginForm("Edit", "Products", FormMethod.Post, new { @class = "form-horizontal" }))
 {
     @Html.AntiForgeryToken()

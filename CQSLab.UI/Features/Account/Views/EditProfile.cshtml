@@ -7,17 +7,7 @@
 
 <h2>Edit profile</h2>
 
-@if (ViewBag.Success != null)
-{
-    <div class="alert alert-success" role="alert">Saved successfuly</div>
-}
-
-@if (ViewBag.Error != null)
-{
-    <div class="alert alert-danger" role="alert">@Html.Raw(@ViewBag.Error)</div>
-}
-
-@using (Html.BeginForm("EditProfile", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+@using (Html.BeginForm("EditProfile", "Account", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -46,9 +36,36 @@
     </div>
 
     <div class="form-group">
+        @Html.LabelFor(p => p.Image, new { @class = "col-sm-2 control-label", @for = Html.IdFor(p => p.Image) })
+        <div class="col-sm-10">
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+                    @if (!String.IsNullOrEmpty(Model.SavedImage))
+                    {
+                        <img src="data:image;base64,@Model.SavedImage" alt=""/>
+                    }
+                </div>
+                <div>
+                    <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="Image" id="Image"></span>
+                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             @Html.ActionLink("Back", "Index", "Stores", null, new { @class = "btn btn-default" })
             <button type="submit" class="btn btn-primary" data-action="save">Save</button>
         </div>
     </div>
+}
+
+@section scripts
+{
+    <script>
+        $(function () {
+            $('.fileinput').fileinput();
+        });
+    </script>
 }

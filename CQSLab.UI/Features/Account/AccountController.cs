@@ -1,21 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Net;
-using System.Security.Claims;
-using System.Threading;
+﻿using AutoMapper;
+using CQSLab.UI.Features.Account.ViewModels;
+using CQSLab.UI.Models;
+using ImageResizer;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using System;
+using System.Drawing;
+using System.IO;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using AutoMapper;
-using CQSLab.Entities;
-using CQSLab.UI.Features.Account.ViewModels;
-using CQSLab.UI.Models;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 
 namespace CQSLab.UI.Features.Account
 {
@@ -40,7 +35,7 @@ namespace CQSLab.UI.Features.Account
 
         //
         // GET: /Account/EditProfile
-        public ActionResult EditProfile( bool success = false)
+        public ActionResult EditProfile(bool success = false)
         {
             if (success)
             {
@@ -49,8 +44,13 @@ namespace CQSLab.UI.Features.Account
 
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var user = userManager.FindByName(Helper.GetIdentityName());
-            Mapper.CreateMap<ApplicationUser, ApplicationUserVM>();
+            Mapper.CreateMap<ApplicationUser, ApplicationUserVM>()
+                .ForMember(dst => dst.Image, opt => opt.Ignore());
             var viewModel = Mapper.Map<ApplicationUser, ApplicationUserVM>(user);
+            if (user.Image != null)
+            {
+                viewModel.SavedImage = System.Convert.ToBase64String(user.Image);
+            }
 
             return View(viewModel);
         }
@@ -63,11 +63,22 @@ namespace CQSLab.UI.Features.Account
         {
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var user = userManager.FindByName(Helper.GetIdentityName());
-            Mapper.CreateMap<ApplicationUserVM, ApplicationUser>();
+            Mapper.CreateMap<ApplicationUserVM, ApplicationUser>()
+                .ForMember(dst => dst.Image, opt => opt.Ignore());
             Mapper.Map(viewModel, user);
-            userManager.UpdateAsync(user);
 
-            return RedirectToAction("EditProfile", "Account");
+            if (viewModel.Image != null)
+            {
+                var binary = new byte[viewModel.Image.ContentLength];
+                viewModel.Image.InputStream.Read(binary, 0, viewModel.Image.ContentLength);
+                var path = Path.Combine(Server.MapPath("~/App_Data/tmp"), Guid.NewGuid().ToString());
+                ImageBuilder.Current.Build(binary, path, CrossCutting.Constants.PROFILE_IMAGE_RESIZE_SETTINGS);
+                user.Image = Image.FromFile(path).ImageToByteArray();
+            }
+
+            userManager.Update(user);
+
+            return RedirectToAction("EditProfile", "Account", new { success = true });
         }
 
         //

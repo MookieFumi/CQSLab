@@ -5,6 +5,8 @@ using System.Security.Principal;
 using System.Threading;
 using System.Web;
 using System.Web.ModelBinding;
+using CQSLab.UI.Features.Account.ViewModels;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ModelStateDictionary = System.Web.Mvc.ModelStateDictionary;
@@ -40,6 +42,19 @@ namespace CQSLab.UI
                 return true;
             }
             return false;
+        }
+
+        public static string GetUserProfileImage()
+        {
+            var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = userManager.FindByName(Helper.GetIdentityName());
+
+            if (user.Image!=null)
+            {
+                return System.Convert.ToBase64String(user.Image);
+            }
+
+            return string.Empty;
         }
     }
 }

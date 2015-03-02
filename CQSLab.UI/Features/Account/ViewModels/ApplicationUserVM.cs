@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace CQSLab.UI.Features.Account.ViewModels
 {
@@ -27,5 +28,10 @@ namespace CQSLab.UI.Features.Account.ViewModels
 
         [Display(Name = "Company")]
         public string Company { get; set; }
+
+        [Display(Name = "Profile image")]
+        public HttpPostedFileBase Image { get; set; }
+
+        public string SavedImage { get; set; }
     }
 }
