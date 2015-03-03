@@ -4,10 +4,11 @@ using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
 using AutoMapper;
-using CQSLab.Entities;
-using CQSLab.Entities.Queries;
-using CQSLab.Entities.Queries.Configuration;
-using CQSLab.Entities.Queries.Result;
+using CQSLab.Business;
+using CQSLab.Business.Entities;
+using CQSLab.Business.Queries;
+using CQSLab.Business.Queries.Configuration;
+using CQSLab.Business.Queries.Result;
 
 namespace CQSLab.Services.Impl
 {

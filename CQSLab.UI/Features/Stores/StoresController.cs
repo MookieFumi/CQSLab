@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using AutoMapper;
+using CQSLab.Business.Entities;
+using CQSLab.Business.Queries.Configuration;
 using CQSLab.CrossCutting;
-using CQSLab.Entities;
-using CQSLab.Entities.Queries.Configuration;
+using CQSLab.Business;
 using CQSLab.Services;
 using CQSLab.UI.Features.Products.ViewModels;
 using CQSLab.UI.Features.Stores.ViewModels;

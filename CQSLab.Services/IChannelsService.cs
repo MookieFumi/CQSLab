@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using CQSLab.Entities;
-using CQSLab.Entities.Queries.Configuration;
-using CQSLab.Entities.Queries.Result;
+using CQSLab.Business.Entities;
+using CQSLab.Business.Queries.Configuration;
+using CQSLab.Business.Queries.Result;
 
 namespace CQSLab.Services
 {

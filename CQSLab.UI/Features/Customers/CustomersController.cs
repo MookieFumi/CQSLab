@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Web.Mvc;
 using AutoMapper;
+using CQSLab.Business.Entities;
+using CQSLab.Business.Queries.Configuration;
 using CQSLab.CrossCutting;
-using CQSLab.Entities;
-using CQSLab.Entities.Queries.Configuration;
 using CQSLab.Services;
 using CQSLab.UI.Features.Customers.ViewModels;
 using CQSLab.UI.Infrastructure.Attributes;

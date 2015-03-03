@@ -1,5 +1,4 @@
 ﻿using System;
-using CQSLab.Entities;
 using CQSLab.UI;
 using CQSLab.UI.Models;
 using Microsoft.AspNet.Identity;

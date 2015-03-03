@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
+using CQSLab.Business;
+using CQSLab.Business.Entities;
+using CQSLab.Business.Queries;
+using CQSLab.Business.Queries.Configuration;
+using CQSLab.Business.Queries.Result;
 using CQSLab.CrossCutting;
-using CQSLab.Entities;
-using CQSLab.Entities.Queries;
-using CQSLab.Entities.Queries.Configuration;
-using CQSLab.Entities.Queries.Result;
 using EntityFramework.Extensions;
 
 namespace CQSLab.Services.Impl

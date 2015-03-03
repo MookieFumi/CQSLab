@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
-using CQSLab.Entities;
+using CQSLab.Business;
+using CQSLab.Business.Entities;
 
 namespace CQSLab.Services.Impl
 {

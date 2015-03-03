@@ -1,5 +1,5 @@
 ﻿using System.Configuration;
-using CQSLab.Entities;
+using CQSLab.Business;
 
 namespace CQSLab.Services
 {

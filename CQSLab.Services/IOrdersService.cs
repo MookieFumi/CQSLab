@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using CQSLab.Entities;
+using CQSLab.Business.Entities;
 
 namespace CQSLab.Services
 {

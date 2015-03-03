@@ -337,13 +337,13 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CQSLab.Business\CQSLab.Business.csproj">
+      <Project>{FC3DA5C1-87E9-45C8-AC58-9FF3DCB43C94}</Project>
+      <Name>CQSLab.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CQSLab.CrossCutting\CQSLab.CrossCutting.csproj">
       <Project>{F1193852-10C5-474B-B4BB-B0196EC80CE2}</Project>
       <Name>CQSLab.CrossCutting</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CQSLab.Entities\CQSLab.Entities.csproj">
-      <Project>{7B4D1497-4B89-494A-B8B4-4236EA040B8D}</Project>
-      <Name>CQSLab.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\CQSLab.Services\CQSLab.Services.csproj">
       <Project>{4E8F0E23-2A3E-46C8-9782-B17F757FD31E}</Project>

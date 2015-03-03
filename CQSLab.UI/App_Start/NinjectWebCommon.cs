@@ -1,6 +1,6 @@
 using System;
 using System.Web;
-using CQSLab.Entities;
+using CQSLab.Business;
 using CQSLab.Services;
 using CQSLab.UI;
 using CQSLab.UI.Models;
