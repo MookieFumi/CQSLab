@@ -17,12 +17,12 @@ namespace CQSLab.UI.Infrastructure.Attributes
             {
                 var accessControl = GetAccessControl(filterContext);
 
-                if (accessControl.NoAccess)
+                if (accessControl.IsNoAccess)
                 {
                     throw new UnauthorizedAccessException();
                 }
 
-                filterContext.Controller.ViewBag.ReadOnly = accessControl.ReadOnly;    
+                filterContext.Controller.ViewBag.ReadOnly = accessControl.IsReadOnly;    
             }, TimeSpan.FromSeconds(3));
         }
 
@@ -32,7 +32,7 @@ namespace CQSLab.UI.Infrastructure.Attributes
 
             var dictionary = new Dictionary<string, AccessControl>
                              {
-                                 {Strings.CUSTOMERS_CONTROLLER_NAME, new AccessControlBuilder().WithNoAccess().Build()},
+                                 {Strings.CUSTOMERS_CONTROLLER_NAME, new AccessControlBuilder().IsNoAccess().Build()},
                                  {Strings.PRODUCTS_CONTROLLER_NAME, new AccessControlBuilder().IsReadOnly().Build()}
                              };
 
@@ -46,8 +46,8 @@ namespace CQSLab.UI.Infrastructure.Attributes
 
         class AccessControl
         {
-            public bool ReadOnly { get; set; }
-            public bool NoAccess { get; set; }
+            public bool IsReadOnly { get; set; }
+            public bool IsNoAccess { get; set; }
         }
 
         class AccessControlBuilder
@@ -59,15 +59,15 @@ namespace CQSLab.UI.Infrastructure.Attributes
                 _accessControl = new AccessControl();
             }
 
-            public AccessControlBuilder WithNoAccess()
+            public AccessControlBuilder IsNoAccess()
             {
-                _accessControl.NoAccess = true;
+                _accessControl.IsNoAccess = true;
                 return this;
             }
 
             public AccessControlBuilder IsReadOnly()
             {
-                _accessControl.ReadOnly = true;
+                _accessControl.IsReadOnly = true;
                 return this;
             }
 
