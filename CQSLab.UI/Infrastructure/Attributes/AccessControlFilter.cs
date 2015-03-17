@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Web.Mvc;
 using System.Web.Routing;
+using CQSLab.CrossCutting;
 
 namespace CQSLab.UI.Infrastructure.Attributes
 {
@@ -12,14 +13,17 @@ namespace CQSLab.UI.Infrastructure.Attributes
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var accessControl = GetAccessControl(filterContext);
-
-            if (accessControl.NoAccess)
+            Retry.Do(() =>
             {
-                throw new UnauthorizedAccessException();
-            }
+                var accessControl = GetAccessControl(filterContext);
 
-            filterContext.Controller.ViewBag.ReadOnly = accessControl.ReadOnly;
+                if (accessControl.NoAccess)
+                {
+                    throw new UnauthorizedAccessException();
+                }
+
+                filterContext.Controller.ViewBag.ReadOnly = accessControl.ReadOnly;    
+            }, TimeSpan.FromSeconds(3));
         }
 
         private AccessControl GetAccessControl(ActionExecutingContext filterContext)
