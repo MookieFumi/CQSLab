@@ -10,16 +10,6 @@ namespace CQSLab.UI.Infrastructure.Attributes
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             Log("OnActionExecuting", filterContext.RouteData);
-            
-            //var noAccess = false;
-            //var readOnly = true;
-            
-            //if (noAccess)
-            //{
-            //    throw new UnauthorizedAccessException();
-            //}
-
-            //filterContext.Controller.ViewBag.ReadOnly = true;
         }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)

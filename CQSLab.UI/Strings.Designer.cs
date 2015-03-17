@@ -70,6 +70,15 @@ namespace CQSLab.UI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to customers.
+        /// </summary>
+        internal static string CUSTOMERS_CONTROLLER_NAME {
+            get {
+                return ResourceManager.GetString("CUSTOMERS_CONTROLLER_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Off.
         /// </summary>
         internal static string Off {
@@ -84,6 +93,15 @@ namespace CQSLab.UI {
         internal static string On {
             get {
                 return ResourceManager.GetString("On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to products.
+        /// </summary>
+        internal static string PRODUCTS_CONTROLLER_NAME {
+            get {
+                return ResourceManager.GetString("PRODUCTS_CONTROLLER_NAME", resourceCulture);
             }
         }
     }

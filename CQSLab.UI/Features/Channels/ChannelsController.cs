@@ -10,8 +10,9 @@ using CQSLab.UI.Infrastructure.Attributes;
 
 namespace CQSLab.UI.Features.Channels
 {
-    [Authorize]
     [LogActionFilter]
+    [Authorize]
+    [AccessControlFilter(ControllerName = "ChannelsController")]
     public class ChannelsController : Controller
     {
         private readonly IChannelsService _channelsService;

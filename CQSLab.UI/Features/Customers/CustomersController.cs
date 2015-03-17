@@ -11,6 +11,7 @@ using CQSLab.UI.Infrastructure.Attributes;
 namespace CQSLab.UI.Features.Customers
 {
     [LogActionFilter]
+    [AccessControlFilter(ControllerName = "CustomersController")]
     public class CustomersController : Controller
     {
         private readonly ICustomersService _customersService;

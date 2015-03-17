@@ -225,6 +225,7 @@
     <Compile Include="HtmlExtensions.cs" />
     <Compile Include="HtmlHelpers.cs" />
     <Compile Include="ImageExtensions.cs" />
+    <Compile Include="Infrastructure\Attributes\AccessControlFilter.cs" />
     <Compile Include="Infrastructure\Attributes\LogActionFilter.cs" />
     <Compile Include="Migrations\201503021045197_InitialCreate.cs" />
     <Compile Include="Migrations\201503021045197_InitialCreate.Designer.cs">

@@ -13,8 +13,9 @@ using CQSLab.UI.Infrastructure.Attributes;
 
 namespace CQSLab.UI.Features.Stores
 {
-    [Authorize]
     [LogActionFilter]
+    [Authorize]
+    [AccessControlFilter(ControllerName = "StoresController")]
     public class StoresController : Controller
     {
         private readonly IStoresService _storesService;
