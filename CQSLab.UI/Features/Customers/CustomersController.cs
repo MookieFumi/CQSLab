@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
 using CQSLab.Business.Entities;
@@ -22,9 +23,9 @@ namespace CQSLab.UI.Features.Customers
         }
 
         // GET: Customers
-        public ActionResult Index(int page = Constants.DEFAULT_PAGE_INDEX)
+        public async Task<ViewResult> Index(int page = Constants.DEFAULT_PAGE_INDEX)
         {
-            var customers = _customersService.GetCustomers(new QueryConfiguration() { Paging = { PageIndex = page } });
+            var customers = await _customersService.GetCustomers(new QueryConfiguration() { Paging = { PageIndex = page } });
 
             return View(customers);
         }
@@ -66,14 +67,14 @@ namespace CQSLab.UI.Features.Customers
         }
 
         // GET: Customers/Edit/4
-        public ActionResult Edit(int id, bool success = false)
+        public async Task<ActionResult> Edit(int id, bool success = false)
         {
             if (success)
             {
                 ViewBag.Success = true;
             }
 
-            var customer = _customersService.GetCustomer(id);
+            var customer = await _customersService.GetCustomer(id);
             if (customer == null)
             {
                 return HttpNotFound();
@@ -88,13 +89,13 @@ namespace CQSLab.UI.Features.Customers
         // POST: Customers/Edit/4
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(CustomerEditVM editVM)
+        public async Task<ActionResult> Edit(CustomerEditVM editVM)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var customer = _customersService.GetCustomer(editVM.CustomerId);
+                    var customer = await _customersService.GetCustomer(editVM.CustomerId);
 
                     Mapper.CreateMap<CustomerEditVM, Customer>();
                     Mapper.Map(editVM, customer);

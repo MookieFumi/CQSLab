@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
 using CQSLab.Business.Entities;
@@ -22,9 +23,9 @@ namespace CQSLab.UI.Features.Products
         }
 
         // GET: Products
-        public ActionResult Index(int page = Constants.DEFAULT_PAGE_INDEX)
+        public async Task<ViewResult> Index(int page = Constants.DEFAULT_PAGE_INDEX)
         {
-            var products = _productsService.GetProducts(new QueryConfiguration() { Paging = { PageIndex = page } });
+            var products = await _productsService.GetProducts(new QueryConfiguration() { Paging = { PageIndex = page } });
 
             return View(products);
         }
@@ -66,14 +67,14 @@ namespace CQSLab.UI.Features.Products
         }
 
         // GET: Products/Edit/4
-        public ActionResult Edit(int id, bool success = false)
+        public async Task<ActionResult> Edit(int id, bool success = false)
         {
             if (success)
             {
                 ViewBag.Success = true;
             }
 
-            var product = _productsService.GetProduct(id);
+            var product = await _productsService.GetProduct(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -88,13 +89,13 @@ namespace CQSLab.UI.Features.Products
         // POST: Products/Edit/4
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ProductEditVM editVM)
+        public async Task<ActionResult> Edit(ProductEditVM editVM)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var product = _productsService.GetProduct(editVM.ProductId);
+                    var product = await _productsService.GetProduct(editVM.ProductId);
 
                     Mapper.CreateMap<ProductEditVM, Product>();
                     Mapper.Map(editVM, product);

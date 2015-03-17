@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Transactions;
 using CQSLab.Business;
 using CQSLab.Business.Entities;
@@ -18,39 +19,40 @@ namespace CQSLab.Services.Impl
 
         #region IProductsService members
 
-        public void AddProduct(Product product)
+        public async void AddProduct(Product product)
         {
             using (var tran = new TransactionScope())
             {
                 Context.Products.Add(product);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
                 tran.Complete();
             }
         }
 
-        public Product GetProduct(int productId)
+        public Task<Product> GetProduct(int productId)
         {
-            return Context.Products.SingleOrDefault(p => p.ProductId == productId);
+            return Context.Products
+                .SingleOrDefaultAsync(p => p.ProductId == productId);
         }
 
-        public QueryResult<ProductQueryResult> GetProducts(QueryConfiguration configuration)
+        public Task<QueryResult<ProductQueryResult>> GetProducts(QueryConfiguration configuration)
         {
             var queries = new ProductsQueries(Context);
             return queries.GetProducts(configuration);
         }
 
-        public void RemoveProduct(int productId)
+        public async void RemoveProduct(int productId)
         {
-            var product = GetProduct(productId);
+            var product = await GetProduct(productId);
             Context.Products.Remove(product);
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
 
-        public void UpdateProduct(Product product)
+        public async void UpdateProduct(Product product)
         {
             Context.Products.Attach(product);
             Context.Entry(product).State = EntityState.Modified;
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
 
         #endregion

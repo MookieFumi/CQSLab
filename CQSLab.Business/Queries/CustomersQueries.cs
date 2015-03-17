@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using CQSLab.Business.Entities;
 using CQSLab.Business.Queries.Configuration;
@@ -17,7 +19,7 @@ namespace CQSLab.Business.Queries
             _context = context;
         }
 
-        public QueryResult<CustomerQueryResult> GetCustomers(QueryConfiguration configuration)
+        public async Task<QueryResult<CustomerQueryResult>> GetCustomers(QueryConfiguration configuration)
         {
             AutoMapper.Mapper.CreateMap<Customer, CustomerQueryResult>();
 
@@ -48,21 +50,20 @@ namespace CQSLab.Business.Queries
                     break;
             }
             int count;
-            
+
             IEnumerable<CustomerQueryResult> data;
             if (configuration.Paging.Enable)
             {
-                count = query.Count();
-                data =
-                    query.Skip((configuration.Paging.PageIndex < 1 ? 0 : configuration.Paging.PageIndex - 1) *
+                count = await query.CountAsync();
+                data = await query.Skip((configuration.Paging.PageIndex < 1 ? 0 : configuration.Paging.PageIndex - 1) *
                                configuration.Paging.PageSize)
                         .Take(configuration.Paging.PageSize)
-                        .ToList();
+                        .ToListAsync();
             }
             else
             {
-                data = query.ToList();
-                count = data.Count();
+                count = await query.CountAsync();
+                data = await query.ToListAsync();
             }
             return new QueryResult<CustomerQueryResult>
             {

@@ -1,5 +1,6 @@
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Transactions;
 using CQSLab.Business;
 using CQSLab.Business.Entities;
@@ -18,39 +19,40 @@ namespace CQSLab.Services.Impl
 
         #region ICustomersService members
 
-        public void AddCustomer(Customer customer)
+        public async void AddCustomer(Customer customer)
         {
             using (var tran = new TransactionScope())
             {
                 Context.Customers.Add(customer);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
                 tran.Complete();
             }
         }
 
-        public Customer GetCustomer(int customerId)
+        public Task<Customer> GetCustomer(int customerId)
         {
-            return Context.Customers.SingleOrDefault(p => p.CustomerId == customerId);
+            return Context.Customers
+                .SingleOrDefaultAsync(p => p.CustomerId == customerId);
         }
 
-        public QueryResult<CustomerQueryResult> GetCustomers(QueryConfiguration configuration)
+        public Task<QueryResult<CustomerQueryResult>> GetCustomers(QueryConfiguration configuration)
         {
             var queries = new CustomersQueries(Context);
             return queries.GetCustomers(configuration);
         }
 
-        public void RemoveCustomer(int customerId)
+        public async void RemoveCustomer(int customerId)
         {
-            var customer = GetCustomer(customerId);
+            var customer = await GetCustomer(customerId);
             Context.Customers.Remove(customer);
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
 
-        public void UpdateCustomer(Customer customer)
+        public async void UpdateCustomer(Customer customer)
         {
             Context.Customers.Attach(customer);
             Context.Entry(customer).State = EntityState.Modified;
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
 
         #endregion

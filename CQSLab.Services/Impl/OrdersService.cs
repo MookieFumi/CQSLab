@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Transactions;
 using CQSLab.Business;
 using CQSLab.Business.Entities;
@@ -16,48 +17,49 @@ namespace CQSLab.Services.Impl
 
         #region IOrdersService members
 
-        public void AddOrder(Order order)
+        public async void AddOrder(Order order)
         {
             using (var tran = new TransactionScope())
             {
                 Context.Orders.Add(order);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
                 tran.Complete();
             }
         }
 
-        public void AddOrderLine(OrderLine orderLine)
+        public async void AddOrderLine(OrderLine orderLine)
         {
             using (var tran = new TransactionScope())
             {
                 Context.OrderLines.Add(orderLine);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
                 tran.Complete();
             }
         }
 
-        public Order GetOrder(int orderId)
+        public Task<Order> GetOrder(int orderId)
         {
-            return Context.Orders.SingleOrDefault(p => p.OrderId == orderId);
+            return Context.Orders
+                .SingleOrDefaultAsync(p => p.OrderId == orderId);
         }
 
-        public IEnumerable<Order> GetOrders()
+        public Task<List<Order>> GetOrders()
         {
-            return Context.Orders.ToList();
+            return Context.Orders.ToListAsync();
         }
 
-        public void RemoveOrder(int orderId)
+        public async void RemoveOrder(int orderId)
         {
-            var order = GetOrder(orderId);
+            var order = await GetOrder(orderId);
             Context.Orders.Remove(order);
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
 
-        public void UpdateOrder(Order order)
+        public async void UpdateOrder(Order order)
         {
             Context.Orders.Attach(order);
             Context.Entry(order).State = EntityState.Modified;
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
 
         #endregion
