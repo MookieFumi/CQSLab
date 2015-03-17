@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Transactions;
 using AutoMapper;
 using CQSLab.Business;
@@ -21,55 +22,56 @@ namespace CQSLab.Services.Impl
 
         #region IStoresService members
 
-        public void AddStore(Store store)
+        public async void AddStore(Store store)
         {
             using (var tran = new TransactionScope())
             {
                 AddBudgetForCurrentPeriod(store);
                 Context.Stores.Add(store);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
                 tran.Complete();
             }
         }
 
-        public Dictionary<int, string> GetChannels()
+        public Task<Dictionary<int, string>> GetChannels()
         {
             return Context.Channels
                 .Select(p => new { p.ChannelId, p.Name })
-                .ToDictionary(prop => prop.ChannelId, prop => prop.Name);
+                .ToDictionaryAsync(prop => prop.ChannelId, prop => prop.Name);
         }
 
-        public Store GetStore(int storeId)
+        public Task<Store> GetStore(int storeId)
         {
-            return Context.Stores.SingleOrDefault(p => p.StoreId == storeId);
+            return Context.Stores
+                .SingleOrDefaultAsync(p => p.StoreId == storeId);
         }
 
-        public QueryResult<StoreQueryResult> GetStores(QueryConfiguration configuration)
+        public async Task<QueryResult<StoreQueryResult>> GetStores(QueryConfiguration configuration)
         {
             var queries = new StoresQueries(Context);
-            return queries.GetStores(configuration);
+            return await queries.GetStores(configuration);
         }
 
-        public void RemoveStore(int storeId)
+        public async void RemoveStore(int storeId)
         {
-            var store = GetStore(storeId);
+            var store = await GetStore(storeId);
             Context.Stores.Remove(store);
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
 
-        public void UpdateStore(Store store)
+        public async void UpdateStore(Store store)
         {
             Context.Stores.Attach(store);
             Context.Entry(store).State = EntityState.Modified;
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
 
         #endregion
 
-        private void AddBudgetForCurrentPeriod(Store store)
+        private async void AddBudgetForCurrentPeriod(Store store)
         {
             Mapper.CreateMap<BudgetChannel, BudgetStore>();
-            var budgetChannel = Context.BudgetsChannel.FirstOrDefault(p => p.AccountantPeriod == DateTime.Now.Year);
+            var budgetChannel = await Context.BudgetsChannel.FirstOrDefaultAsync(p => p.AccountantPeriod == DateTime.Now.Year);
             var budgetStore = Mapper.Map<BudgetChannel, BudgetStore>(budgetChannel);
             store.Budgets.Add(budgetStore);
         }

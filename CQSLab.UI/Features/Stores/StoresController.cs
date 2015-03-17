@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
 using CQSLab.Business.Entities;
@@ -26,19 +27,20 @@ namespace CQSLab.UI.Features.Stores
         }
 
         // GET: Stores
-        public ActionResult Index(int page = Constants.DEFAULT_PAGE_INDEX)
+        public async Task<ViewResult> Index(int page = Constants.DEFAULT_PAGE_INDEX)
         {
-            var stores = _storesService.GetStores(new QueryConfiguration() { Paging = { PageIndex = page } });
+            var stores = await _storesService.GetStores(new QueryConfiguration() { Paging = { PageIndex = page } });
 
             return View(stores);
         }
 
         // GET: Stores/Create
-        public ActionResult Create()
+        public async Task<ViewResult> Create()
         {
+            var channels = await _storesService.GetChannels();
             var viewModel = new StoreVM()
             {
-                Channels = SelectListHelper.GetFromDictionary(_storesService.GetChannels())
+                Channels = SelectListHelper.GetFromDictionary(channels)
             };
 
             return View(viewModel);
@@ -47,7 +49,7 @@ namespace CQSLab.UI.Features.Stores
         // POST: Stores/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(StoreVM viewModel)
+        public async Task<ActionResult> Create(StoreVM viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -69,19 +71,20 @@ namespace CQSLab.UI.Features.Stores
                 ViewBag.Error = Helper.GetErrorsFromModelState(ModelState);
             }
 
-            viewModel.Channels = SelectListHelper.GetFromDictionary(_storesService.GetChannels());
+            var channels = await _storesService.GetChannels();
+            viewModel.Channels = SelectListHelper.GetFromDictionary(channels);
             return View(viewModel);
         }
 
         // GET: Stores/Edit/4
-        public ActionResult Edit(int id, bool success = false)
+        public async Task<ActionResult> Edit(int id, bool success = false)
         {
             if (success)
             {
                 ViewBag.Success = true;
             }
 
-            var store = _storesService.GetStore(id);
+            var store = await _storesService.GetStore(id);
             if (store == null)
             {
                 return HttpNotFound();
@@ -90,20 +93,21 @@ namespace CQSLab.UI.Features.Stores
             Mapper.CreateMap<Store, StoreEditVM>();
             var viewModel = Mapper.Map<Store, StoreEditVM>(store);
 
-            viewModel.Channels = SelectListHelper.GetFromDictionary(_storesService.GetChannels());
+            var channels = await _storesService.GetChannels();
+            viewModel.Channels = SelectListHelper.GetFromDictionary(channels);
             return View(viewModel);
         }
 
         // POST: Stores/Edit/4
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(StoreEditVM viewModel)
+        public async Task<ActionResult> Edit(StoreEditVM viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var store = _storesService.GetStore(viewModel.StoreId);
+                    var store = await _storesService.GetStore(viewModel.StoreId);
 
                     Mapper.CreateMap<StoreEditVM, Store>();
                     Mapper.Map(viewModel, store);
@@ -121,7 +125,8 @@ namespace CQSLab.UI.Features.Stores
                 ViewBag.Error = Helper.GetErrorsFromModelState(ModelState);
             }
 
-            viewModel.Channels = SelectListHelper.GetFromDictionary(_storesService.GetChannels());
+            var channels = await _storesService.GetChannels();
+            viewModel.Channels = SelectListHelper.GetFromDictionary(channels);
             return View(viewModel);
         }
     }

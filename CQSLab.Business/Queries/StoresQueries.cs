@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using CQSLab.Business.Entities;
 using CQSLab.Business.Queries.Configuration;
@@ -17,7 +19,7 @@ namespace CQSLab.Business.Queries
             _context = context;
         }
 
-        public QueryResult<StoreQueryResult> GetStores(QueryConfiguration configuration)
+        public async Task<QueryResult<StoreQueryResult>> GetStores(QueryConfiguration configuration)
         {
             AutoMapper.Mapper.CreateMap<Store, StoreQueryResult>()
                 .ForMember(dst=>dst.ChannelId, opt=>opt.MapFrom(src=>src.ChannelId))
@@ -49,23 +51,24 @@ namespace CQSLab.Business.Queries
                             : query.OrderByDescending(p => p.StoreId);
                     break;
             }
-            int count;
             
-            IEnumerable<StoreQueryResult> data;
+            int count;
+            List<StoreQueryResult> data;
+
             if (configuration.Paging.Enable)
             {
-                count = query.Count();
-                data =
-                    query.Skip((configuration.Paging.PageIndex < 1 ? 0 : configuration.Paging.PageIndex - 1) *
+                count = await query.CountAsync();
+                data = await query.Skip((configuration.Paging.PageIndex < 1 ? 0 : configuration.Paging.PageIndex - 1) *
                                configuration.Paging.PageSize)
                         .Take(configuration.Paging.PageSize)
-                        .ToList();
+                        .ToListAsync();
             }
             else
             {
-                data = query.ToList();
-                count = data.Count();
+                data = await query.ToListAsync();
+                count = await query.CountAsync();
             }
+
             return new QueryResult<StoreQueryResult>
             {
                 Count = count,
