@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Transactions;
 using CQSLab.Business;
 using CQSLab.Business.Entities;
@@ -22,22 +23,21 @@ namespace CQSLab.Services.Impl
 
         #region IChannelsService members
 
-        public void AddChannel(Channel channel)
+        public async void AddChannel(Channel channel)
         {
             using (var tran = new TransactionScope())
             {
                 AddBudgetForCurrentPeriod(channel);
                 Context.Channels.Add(channel);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
                 tran.Complete();
             }
         }
 
-        public BudgetChannel GetBudget(int channelId, int accountantPeriod)
+        public Task<BudgetChannel> GetBudget(int channelId, int accountantPeriod)
         {
-            return
-                Context.BudgetsChannel
-                    .SingleOrDefault(p => p.ChannelId == channelId && p.AccountantPeriod == accountantPeriod);
+            return Context.BudgetsChannel
+                    .SingleOrDefaultAsync(p => p.ChannelId == channelId && p.AccountantPeriod == accountantPeriod);
         }
 
         public IEnumerable<int> GetBudgets(int channelId)
@@ -47,60 +47,61 @@ namespace CQSLab.Services.Impl
                 .Select(p => p.AccountantPeriod);
         }
 
-        public Channel GetChannel(int channelId)
+        public Task<Channel> GetChannel(int channelId)
         {
-            return Context.Channels.SingleOrDefault(p => p.ChannelId == channelId);
+            return Context.Channels
+                .SingleOrDefaultAsync(p => p.ChannelId == channelId);
         }
 
-        public QueryResult<ChannelQueryResult> GetChannels(QueryConfiguration configuration)
+        public async Task<QueryResult<ChannelQueryResult>> GetChannels(QueryConfiguration configuration)
         {
             var queries = new ChannelsQueries(Context);
-            return queries.GetChannels(configuration);
+            return await queries.GetChannels(configuration);
         }
 
-        public void RemoveChannel(int channelId)
+        public async void RemoveChannel(int channelId)
         {
-            var channel = GetChannel(channelId);
+            var channel = await GetChannel(channelId);
             Context.Channels.Remove(channel);
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
 
-        public void UpdateBudget(BudgetChannel budget)
+        public async void UpdateBudget(BudgetChannel budget)
         {
             using (var tran = new TransactionScope())
             {
                 Context.BudgetsChannel.Attach(budget);
                 Context.Entry(budget).State = EntityState.Modified;
 
-                var budgetsStoreIds = GetBudgetsStoreIdsWithSameData(budget.ChannelId, budget.AccountantPeriod).ToList();
+                var budgetsStoreIds = await GetBudgetsStoreIdsWithSameData(budget.ChannelId, budget.AccountantPeriod);
 
-                Context.BudgetsStore
+                await Context.BudgetsStore
                     .Where(p => budgetsStoreIds.Contains(p.StoreId))
-                    .Update(t => new BudgetStore
-                                 {
-                                     January = budget.January,
-                                     February = budget.February,
-                                     March = budget.March,
-                                     April = budget.April,
-                                     May = budget.May,
-                                     June = budget.June,
-                                     July = budget.July,
-                                     August = budget.August,
-                                     September = budget.September,
-                                     October = budget.October,
-                                     November = budget.November,
-                                     December = budget.December
-                                 });
-                Context.SaveChanges();
+                    .UpdateAsync(t => new BudgetStore
+                                      {
+                                          January = budget.January,
+                                          February = budget.February,
+                                          March = budget.March,
+                                          April = budget.April,
+                                          May = budget.May,
+                                          June = budget.June,
+                                          July = budget.July,
+                                          August = budget.August,
+                                          September = budget.September,
+                                          October = budget.October,
+                                          November = budget.November,
+                                          December = budget.December
+                                      });
+                await Context.SaveChangesAsync();
                 tran.Complete();
             }
         }
 
-        public void UpdateChannel(Channel channel)
+        public async void UpdateChannel(Channel channel)
         {
             Context.Channels.Attach(channel);
             Context.Entry(channel).State = EntityState.Modified;
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
 
         #endregion
@@ -125,18 +126,18 @@ namespace CQSLab.Services.Impl
                                 });
         }
 
-        private BudgetChannel GetBudgetChannelAsNoTracking(int channelId, int accountantPeriod)
+        private Task<BudgetChannel> GetBudgetChannelAsNoTracking(int channelId, int accountantPeriod)
         {
             return Context.BudgetsChannel
                 .AsNoTracking()
-                .SingleOrDefault(p =>
+                .SingleOrDefaultAsync(p =>
                     p.ChannelId == channelId &&
                     p.AccountantPeriod == accountantPeriod);
         }
 
-        private IEnumerable<int> GetBudgetsStoreIdsWithSameData(int channelId, int accountantPeriod)
+        private async Task<IEnumerable<int>> GetBudgetsStoreIdsWithSameData(int channelId, int accountantPeriod)
         {
-            var original = GetBudgetChannelAsNoTracking(channelId, accountantPeriod);
+            var original = await GetBudgetChannelAsNoTracking(channelId, accountantPeriod);
 
             return Context.BudgetsStore.Where(p =>
                 p.AccountantPeriod == original.AccountantPeriod &&

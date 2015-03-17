@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
 using CQSLab.Business.Entities;
@@ -23,9 +24,9 @@ namespace CQSLab.UI.Features.Channels
         }
 
         // GET: Channels
-        public ActionResult Index(int page = Constants.DEFAULT_PAGE_INDEX)
+        public async Task<ViewResult> Index(int page = Constants.DEFAULT_PAGE_INDEX)
         {
-            var channels = _channelsService.GetChannels(new QueryConfiguration() { Paging = { PageIndex = page } });
+            var channels = await _channelsService.GetChannels(new QueryConfiguration() { Paging = { PageIndex = page } });
 
             return View(channels);
         }
@@ -67,14 +68,14 @@ namespace CQSLab.UI.Features.Channels
         }
 
         // GET: Channels/Edit/4
-        public ActionResult Edit(int id, bool success = false)
+        public async Task<ActionResult> Edit(int id, bool success = false)
         {
             if (success)
             {
                 ViewBag.Success = true;
             }
 
-            var channel = _channelsService.GetChannel(id);
+            var channel = await _channelsService.GetChannel(id);
             if (channel == null)
             {
                 return HttpNotFound();
@@ -90,13 +91,13 @@ namespace CQSLab.UI.Features.Channels
         // POST: Channels/Edit/4
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ChannelEditVM viewModel)
+        public async Task<ActionResult> Edit(ChannelEditVM viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var channel = _channelsService.GetChannel(viewModel.ChannelId);
+                    var channel = await _channelsService.GetChannel(viewModel.ChannelId);
 
                     Mapper.CreateMap<ChannelEditVM, Channel>();
                     Mapper.Map(viewModel, channel);
@@ -118,14 +119,14 @@ namespace CQSLab.UI.Features.Channels
         }
 
         // GET: Channels/Budget/4?
-        public ActionResult Budget(int id, int accountantPeriod, bool success = false)
+        public async Task<ActionResult> Budget(int id, int accountantPeriod, bool success = false)
         {
             if (success)
             {
                 ViewBag.Success = true;
             }
 
-            var budget = _channelsService.GetBudget(id, accountantPeriod);
+            var budget = await _channelsService.GetBudget(id, accountantPeriod);
             if (budget == null)
             {
                 return HttpNotFound();
@@ -140,13 +141,13 @@ namespace CQSLab.UI.Features.Channels
         // POST: Channels/Budget/4
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Budget(BudgetEditVM viewModel)
+        public async Task<ActionResult> Budget(BudgetEditVM viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var budget = _channelsService.GetBudget(viewModel.ChannelId, viewModel.AccountantPeriod);
+                    var budget = await _channelsService.GetBudget(viewModel.ChannelId, viewModel.AccountantPeriod);
 
                     Mapper.CreateMap<BudgetEditVM, BudgetChannel>();
                     Mapper.Map(viewModel, budget);
