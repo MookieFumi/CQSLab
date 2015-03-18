@@ -1,23 +1,27 @@
-﻿using System.Data.Entity;
+﻿using System.Configuration;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using CQSLab.Business.DatabaseInitializers.Configurations;
 using CQSLab.Business.Entities;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CQSLab.Business
 {
-    public class ModelContext : DbContext
+    public class ModelContext : IdentityDbContext<ApplicationUser>
     {
-        public ModelContext()
-        {
-            Initialization();
-            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = 720;
-        }
+        public ModelContext() : base("name=ModelContext") { }
 
         public ModelContext(string nameOrConnectionString)
             : base(nameOrConnectionString)
         {
             Initialization();
+        }
+
+        public static ModelContext Create()
+        {
+            var nameOrConnectionString = ConfigurationManager.ConnectionStrings["ModelContext"].ConnectionString;
+            return new ModelContext(nameOrConnectionString);
         }
 
         #region "DBSet"
@@ -36,9 +40,14 @@ namespace CQSLab.Business
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            RemoveConventions(modelBuilder);
+            modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
+            modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
+            modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
 
+            RemoveConventions(modelBuilder);
             AddCustomConventions(modelBuilder);
+
+            modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
 
             modelBuilder.Configurations.Add(new ProductConfiguration());
             modelBuilder.Configurations.Add(new CustomerConfiguration());
@@ -48,6 +57,14 @@ namespace CQSLab.Business
             modelBuilder.Configurations.Add(new StoreConfiguration());
             modelBuilder.Configurations.Add(new BudgetChannelConfiguration());
             modelBuilder.Configurations.Add(new BudgetStoreConfiguration());
+
+            modelBuilder.Configurations.Add(new LanguageConfiguration());
+            modelBuilder.Configurations.Add(new LevelLanguageConfiguration());
+            modelBuilder.Configurations.Add(new UserLanguageConfiguration());
+
+            modelBuilder.Configurations.Add(new AcademicLevelConfiguration());
+            modelBuilder.Configurations.Add(new AcademicTrainingConfiguration());
+            modelBuilder.Configurations.Add(new UserStudyConfiguration());
         }
 
         private static void RemoveConventions(DbModelBuilder modelBuilder)

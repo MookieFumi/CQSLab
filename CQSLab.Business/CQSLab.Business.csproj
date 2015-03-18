@@ -45,8 +45,15 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -55,30 +62,48 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseInitializers\Configurations\AcademicLevelConfiguration.cs" />
+    <Compile Include="DatabaseInitializers\Configurations\AcademicTrainingConfiguration.cs" />
+    <Compile Include="DatabaseInitializers\Configurations\ApplicationUserConfiguration.cs" />
     <Compile Include="DatabaseInitializers\Configurations\BudgetChannelConfiguration.cs" />
     <Compile Include="DatabaseInitializers\Configurations\BudgetStoreConfiguration.cs" />
     <Compile Include="DatabaseInitializers\Configurations\ChannelConfiguration.cs" />
     <Compile Include="DatabaseInitializers\Configurations\CustomerConfiguration.cs" />
+    <Compile Include="DatabaseInitializers\Configurations\LanguageConfiguration.cs" />
+    <Compile Include="DatabaseInitializers\Configurations\LevelLanguageConfiguration.cs" />
     <Compile Include="DatabaseInitializers\Configurations\OrderConfiguration.cs" />
     <Compile Include="DatabaseInitializers\Configurations\OrderLineConfiguration.cs" />
     <Compile Include="DatabaseInitializers\Configurations\ProductConfiguration.cs" />
     <Compile Include="DatabaseInitializers\Configurations\StoreConfiguration.cs" />
+    <Compile Include="DatabaseInitializers\Configurations\UserLanguageConfiguration.cs" />
+    <Compile Include="DatabaseInitializers\Configurations\UserStudyConfiguration.cs" />
+    <Compile Include="Entities\AcademicStudy.cs" />
+    <Compile Include="Entities\AcademicTraining.cs" />
+    <Compile Include="Entities\ApplicationUser.cs" />
     <Compile Include="Entities\BudgetChannel.cs" />
     <Compile Include="Entities\BudgetStore.cs" />
     <Compile Include="Entities\Channel.cs" />
     <Compile Include="Entities\Customer.cs" />
+    <Compile Include="Entities\Language.cs" />
+    <Compile Include="Entities\UserLanguage.cs" />
+    <Compile Include="Entities\LevelLanguage.cs" />
     <Compile Include="Entities\MonthlyData.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\OrderLine.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\Store.cs" />
-    <Compile Include="Migrations\201502100808105_Initial-Model.cs" />
-    <Compile Include="Migrations\201502100808105_Initial-Model.Designer.cs">
-      <DependentUpon>201502100808105_Initial-Model.cs</DependentUpon>
+    <Compile Include="Entities\UserStudy.cs" />
+    <Compile Include="Migrations\201503181441320_Initial-Model.cs" />
+    <Compile Include="Migrations\201503181441320_Initial-Model.Designer.cs">
+      <DependentUpon>201503181441320_Initial-Model.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201502281630493_Add-DP-Entities.cs" />
-    <Compile Include="Migrations\201502281630493_Add-DP-Entities.Designer.cs">
-      <DependentUpon>201502281630493_Add-DP-Entities.cs</DependentUpon>
+    <Compile Include="Migrations\201503181512212_Add-Languages-Entites.cs" />
+    <Compile Include="Migrations\201503181512212_Add-Languages-Entites.Designer.cs">
+      <DependentUpon>201503181512212_Add-Languages-Entites.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503181634494_Add-Studies-Entites.cs" />
+    <Compile Include="Migrations\201503181634494_Add-Studies-Entites.Designer.cs">
+      <DependentUpon>201503181634494_Add-Studies-Entites.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelContext.cs" />
@@ -101,18 +126,21 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201502100808105_Initial-Model.resx">
-      <DependentUpon>201502100808105_Initial-Model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502281630493_Add-DP-Entities.resx">
-      <DependentUpon>201502281630493_Add-DP-Entities.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CQSLab.CrossCutting\CQSLab.CrossCutting.csproj">
       <Project>{f1193852-10c5-474b-b4bb-b0196ec80ce2}</Project>
       <Name>CQSLab.CrossCutting</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201503181441320_Initial-Model.resx">
+      <DependentUpon>201503181441320_Initial-Model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503181512212_Add-Languages-Entites.resx">
+      <DependentUpon>201503181512212_Add-Languages-Entites.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503181634494_Add-Studies-Entites.resx">
+      <DependentUpon>201503181634494_Add-Studies-Entites.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

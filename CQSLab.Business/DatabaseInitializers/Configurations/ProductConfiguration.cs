@@ -8,6 +8,7 @@ namespace CQSLab.Business.DatabaseInitializers.Configurations
         public ProductConfiguration()
         {
             ToTable("Products");
+            Property(p => p.Name).IsOptional();
         }
     }
 }

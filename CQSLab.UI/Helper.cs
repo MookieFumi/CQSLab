@@ -29,6 +29,11 @@ namespace CQSLab.UI
             return HttpContext.Current.User.Identity.IsAuthenticated;
         }
 
+        public static string GetUserId()
+        {
+            return HttpContext.Current.User.Identity.GetUserId();
+        }
+
         public static string GetIdentityName()
         {
             return HttpContext.Current.User.Identity.Name;

@@ -7,33 +7,15 @@
 
 <h2>Edit profile</h2>
 
+<hr />
+
 @using (Html.BeginForm("EditProfile", "Account", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     @Html.HiddenFor(model => model.Id)
     @Html.HiddenFor(model => model.UserName)
-    @Html.HiddenFor(model => model.Email)
     @Html.HiddenFor(model => model.ProviderName)
-
-    <div class="form-group">
-        @Html.LabelFor(p => p.Name, new { @class = "col-sm-2 control-label", @for = Html.IdFor(p => p.Name) })
-        <div class="col-sm-10">
-            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Name" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(p => p.Surname, new { @class = "col-sm-2 control-label", @for = Html.IdFor(p => p.Surname) })
-        <div class="col-sm-10">
-            @Html.TextBoxFor(model => model.Surname, new { @class = "form-control", placeholder = "Surname" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(p => p.Company, new { @class = "col-sm-2 control-label", @for = Html.IdFor(p => p.Company) })
-        <div class="col-sm-10">
-            @Html.TextBoxFor(model => model.Company, new { @class = "form-control", placeholder = "Company" })
-        </div>
-    </div>
 
     <div class="form-group">
         @Html.LabelFor(p => p.Image, new { @class = "col-sm-2 control-label", @for = Html.IdFor(p => p.Image) })
@@ -42,7 +24,7 @@
                 <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
                     @if (!String.IsNullOrEmpty(Model.SavedImage))
                     {
-                        <img src="data:image;base64,@Model.SavedImage" alt=""/>
+                        <img src="data:image;base64,@Model.SavedImage" alt="" />
                     }
                 </div>
                 <div>
@@ -50,6 +32,54 @@
                     <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
                 </div>
             </div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        @Html.LabelFor(p => p.Name, new { @class = "col-sm-2 control-label", @for = Html.IdFor(p => p.Name) })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Name" })
+            @Html.ValidationMessageFor(model => model.Name, null, new { @class = "error-message" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Surname, new { @class = "col-sm-2 control-label", @for = Html.IdFor(p => p.Surname) })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.Surname, new { @class = "form-control", placeholder = "Surname" })
+            @Html.ValidationMessageFor(model => model.Surname, null, new { @class = "error-message" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Email, new { @class = "col-sm-2 control-label", @for = Html.IdFor(p => p.Email) })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email" })
+            @Html.ValidationMessageFor(model => model.Email, null, new { @class = "error-message" })
+        </div>
+    </div>
+    
+    <hr/>
+
+    <div class="form-group">
+        @Html.LabelFor(p => p.Address, new { @class = "col-sm-2 control-label", @for = Html.IdFor(p => p.Address) })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.Address, new { @class = "form-control", placeholder = "Address" })
+            @Html.ValidationMessageFor(model => model.Address, null, new { @class = "error-message" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(p => p.PostalCode, new { @class = "col-sm-2 control-label", @for = Html.IdFor(p => p.PostalCode) })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.PostalCode, new { @class = "form-control", placeholder = "PostalCode" })
+            @Html.ValidationMessageFor(model => model.PostalCode, null, new { @class = "error-message" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(p => p.City, new { @class = "col-sm-2 control-label", @for = Html.IdFor(p => p.City) })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(model => model.City, new { @class = "form-control", placeholder = "City" })
+            @Html.ValidationMessageFor(model => model.City, null, new { @class = "error-message" })
         </div>
     </div>
 

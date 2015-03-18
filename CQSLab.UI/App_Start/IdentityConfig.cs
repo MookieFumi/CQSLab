@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using CQSLab.UI.Models;
+using CQSLab.Business;
+using CQSLab.Business.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -20,7 +21,7 @@ namespace CQSLab.UI
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<SecurityContext>()));
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ModelContext>()));
 
 
             // Configure validation logic for usernames

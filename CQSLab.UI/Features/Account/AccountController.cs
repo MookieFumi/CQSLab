@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using CQSLab.Business.Entities;
 using CQSLab.UI.Features.Account.ViewModels;
-using CQSLab.UI.Models;
 using ImageResizer;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -45,7 +45,8 @@ namespace CQSLab.UI.Features.Account
             var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var user = userManager.FindByName(Helper.GetIdentityName());
             Mapper.CreateMap<ApplicationUser, ApplicationUserVM>()
-                .ForMember(dst => dst.Image, opt => opt.Ignore());
+                .ForMember(dst => dst.Image, opt => opt.Ignore())
+                .ForMember(dst => dst.Email, opt => opt.MapFrom(src => src.Email));
             var viewModel = Mapper.Map<ApplicationUser, ApplicationUserVM>(user);
             if (user.Image != null)
             {
@@ -111,7 +112,7 @@ namespace CQSLab.UI.Features.Account
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.Failure:
                     var email = string.Format("{0}@{1}.com", loginInfo.DefaultUserName, loginInfo.Login.LoginProvider.ToLower());
-                    var user = new ApplicationUser { UserName = loginInfo.DefaultUserName, ProviderName = loginInfo.Login.LoginProvider, Email = email };
+                    var user = new ApplicationUser { UserName = loginInfo.DefaultUserName, Name = loginInfo.DefaultUserName, ProviderName = loginInfo.Login.LoginProvider, Email = email };
                     var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
                     var identityResult = await userManager.CreateAsync(user);
                     if (identityResult.Succeeded)

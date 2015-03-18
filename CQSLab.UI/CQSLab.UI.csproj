@@ -95,10 +95,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin.Security.Google">
-      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
@@ -227,21 +223,6 @@
     <Compile Include="ImageExtensions.cs" />
     <Compile Include="Infrastructure\Attributes\AccessControlFilter.cs" />
     <Compile Include="Infrastructure\Attributes\LogActionFilter.cs" />
-    <Compile Include="Migrations\201503021045197_InitialCreate.cs" />
-    <Compile Include="Migrations\201503021045197_InitialCreate.Designer.cs">
-      <DependentUpon>201503021045197_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503021217558_Change-ApplicationUser.cs" />
-    <Compile Include="Migrations\201503021217558_Change-ApplicationUser.Designer.cs">
-      <DependentUpon>201503021217558_Change-ApplicationUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503021402176_Add-ApplicationUser-Image.cs" />
-    <Compile Include="Migrations\201503021402176_Add-ApplicationUser-Image.Designer.cs">
-      <DependentUpon>201503021402176_Add-ApplicationUser-Image.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\ApplicationUser.cs" />
-    <Compile Include="Models\SecurityContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Features\Customers\ViewModels\CustomerEditVM.cs" />
     <Compile Include="Features\Customers\ViewModels\CustomerVM.cs" />
@@ -295,6 +276,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="appSettings.config" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
     <Content Include="Scripts\jquery-2.1.3.min.js" />
@@ -333,7 +315,9 @@
     <Content Include="Features\Products\Views\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Decimal.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
@@ -353,15 +337,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201503021045197_InitialCreate.resx">
-      <DependentUpon>201503021045197_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503021217558_Change-ApplicationUser.resx">
-      <DependentUpon>201503021217558_Change-ApplicationUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503021402176_Add-ApplicationUser-Image.resx">
-      <DependentUpon>201503021402176_Add-ApplicationUser-Image.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>

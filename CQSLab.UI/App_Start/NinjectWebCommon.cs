@@ -3,7 +3,6 @@ using System.Web;
 using CQSLab.Business;
 using CQSLab.Services;
 using CQSLab.UI;
-using CQSLab.UI.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -69,8 +68,6 @@ namespace CQSLab.UI
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
 
             kernel.Bind<ModelContext>().ToSelf().InRequestScope();
-
-            kernel.Bind<SecurityContext>().ToSelf().InRequestScope();
             kernel.Bind<IAuthenticationManager>().ToMethod(c => HttpContext.Current.GetOwinContext().Authentication).InRequestScope();
             //kernel.Bind<UserManager<ApplicationUser>>().ToMethod(context => Startup.UserManagerFactory());
             //kernel.Bind(typeof(IUserStore<ApplicationUser>)).To(typeof(UserStore<ApplicationUser>)).InRequestScope();

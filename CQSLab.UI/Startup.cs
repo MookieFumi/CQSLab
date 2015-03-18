@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Configuration;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using CQSLab.Business;
+using CQSLab.Business.Entities;
 using CQSLab.UI;
-using CQSLab.UI.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -24,7 +28,7 @@ namespace CQSLab.UI
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         private static void ConfigureAuth(IAppBuilder app)
         {
-            app.CreatePerOwinContext(SecurityContext.Create);
+            app.CreatePerOwinContext(ModelContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
             
@@ -34,6 +38,7 @@ namespace CQSLab.UI
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login")
             });
+
             // Use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
@@ -49,7 +54,7 @@ namespace CQSLab.UI
             UserManagerFactory = () =>
             {
                 var usermanager = new UserManager<ApplicationUser>(
-                    new UserStore<ApplicationUser>(new SecurityContext()));
+                    new UserStore<ApplicationUser>(new ModelContext(ConfigurationManager.ConnectionStrings["ModelContext"].ConnectionString)));
 
                 // allow alphanumeric characters in username
                 usermanager.UserValidator = new UserValidator<ApplicationUser>(usermanager)

@@ -2,6 +2,24 @@
     ViewBag.Title = "Home Page";
 }
 
+@if (!ViewBag.IsFilledPersonalData)
+{
+    <div class="bs-callout bs-callout-danger" id="callout-helper-context-color-specificity">
+        <h4>Some data are required</h4>
+        <p>To be able to proceed , you need to finish filling some personal data</p>
+        @Html.ActionLink("Update personal data", "EditProfile", "Account", null, new {@class="btn btn-default"})
+    </div>
+}
+
+@if (!ViewBag.IsFilledStudiesData)
+{
+    <div class="bs-callout bs-callout-danger" id="callout-helper-context-color-specificity">
+        <h4>Some data are required</h4>
+        <p>To be able to proceed , you need to finish filling some studies data</p>
+        @*@Html.ActionLink("Update personal data", "EditProfile", "Account", null, new { @class = "btn btn-default" })*@
+    </div>
+}
+
 <div class="jumbotron">
     <h1>World of Grammar</h1>
     <p class="lead">
@@ -12,15 +30,3 @@
     </p>
 </div>
 
-@*<div class="row">
-        <div class="col-md-4">
-            <h2></h2>
-            <p>
-            </p>
-        </div>
-        <div class="col-md-4">
-            <h2></h2>
-            <p>
-            </p>
-        </div>
-    </div>*@

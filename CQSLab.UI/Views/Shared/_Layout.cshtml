@@ -32,7 +32,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header pull-left">
-                <img src="~/Content/images/ghostBusters_mini.png" class="margin-top-10"/>
+                <a href="@Url.Action("Index", "Home")"><img src="~/Content/images/ghostBusters_mini.png" class="margin-top-10" /></a>
                 @*@Html.ActionLink("CQSLab", "Index", "Home", null, new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-header pull-right">
@@ -86,8 +86,8 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">Authorize <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li class="dropdown-header">DP options</li>
                                 <li>@Html.ActionLink("View Channels", "Index", "Channels")</li>
+                                <li class="divider"></li>
                                 <li>@Html.ActionLink("View Stores", "Index", "Stores")</li>
                             </ul>
                         </li>
@@ -122,6 +122,7 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 

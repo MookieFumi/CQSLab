@@ -32,10 +32,6 @@ textarea {
 
 /* CUSTOM*/
 
-.navbar-nav li a, .navbar-brand {
-    line-height: 50px !important;
-}
-
 .profile-image {
     width: 50px;
 }
@@ -84,3 +80,22 @@ textarea {
             text-decoration: none;
             background-color: #428bca;
         }
+
+.navbar-brand, .navbar-nav > li > a {
+    line-height: 50px !important;
+}
+
+.error-message {
+    display: block;
+    margin-top: 10px;
+    color: red;
+    font-weight: bold;
+}
+
+.form-group.required .control-label:after { 
+    color: #d00;
+    content: "*";
+    position: absolute;
+    margin-left: 8px;
+    top:7px;
+}
