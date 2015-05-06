@@ -11,7 +11,7 @@ namespace CQSLab.Services
         void AddChannel(Channel channel);
         Task<Channel> GetChannel(int channelId);
         Task<QueryResult<ChannelQueryResult>> GetChannels(QueryConfiguration configuration);
-        void UpdateChannel(Channel channel);
+        Task<int> UpdateChannel(Channel channel);
         void RemoveChannel(int channelId);
         IEnumerable<int> GetBudgets(int channelId);
         Task<BudgetChannel> GetBudget(int channelId, int accountantPeriod);

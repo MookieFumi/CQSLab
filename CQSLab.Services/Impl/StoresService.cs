@@ -71,7 +71,9 @@ namespace CQSLab.Services.Impl
         private async void AddBudgetForCurrentPeriod(Store store)
         {
             Mapper.CreateMap<BudgetChannel, BudgetStore>();
-            var budgetChannel = await Context.BudgetsChannel.FirstOrDefaultAsync(p => p.AccountantPeriod == DateTime.Now.Year);
+            var budgetChannel = await Context.BudgetsChannel.FirstOrDefaultAsync(p => 
+                p.AccountantPeriod == DateTime.Now.Year && 
+                p.ChannelId==store.ChannelId);
             var budgetStore = Mapper.Map<BudgetChannel, BudgetStore>(budgetChannel);
             store.Budgets.Add(budgetStore);
         }

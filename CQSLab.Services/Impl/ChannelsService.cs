@@ -32,6 +32,7 @@ namespace CQSLab.Services.Impl
                 await Context.SaveChangesAsync();
                 tran.Complete();
             }
+
         }
 
         public Task<BudgetChannel> GetBudget(int channelId, int accountantPeriod)
@@ -75,33 +76,38 @@ namespace CQSLab.Services.Impl
 
                 var budgetsStoreIds = await GetBudgetsStoreIdsWithSameData(budget.ChannelId, budget.AccountantPeriod);
 
-                await Context.BudgetsStore
-                    .Where(p => budgetsStoreIds.Contains(p.StoreId))
-                    .UpdateAsync(t => new BudgetStore
-                                      {
-                                          January = budget.January,
-                                          February = budget.February,
-                                          March = budget.March,
-                                          April = budget.April,
-                                          May = budget.May,
-                                          June = budget.June,
-                                          July = budget.July,
-                                          August = budget.August,
-                                          September = budget.September,
-                                          October = budget.October,
-                                          November = budget.November,
-                                          December = budget.December
-                                      });
+                if (budgetsStoreIds.Any())
+                {
+                    Context.BudgetsStore
+                        .Where(p => budgetsStoreIds.Contains(p.StoreId))
+                        .UpdateAsync(t => new BudgetStore
+                        {
+                            January = budget.January,
+                            February = budget.February,
+                            March = budget.March,
+                            April = budget.April,
+                            May = budget.May,
+                            June = budget.June,
+                            July = budget.July,
+                            August = budget.August,
+                            September = budget.September,
+                            October = budget.October,
+                            November = budget.November,
+                            December = budget.December
+                        });
+
+                }
+
                 await Context.SaveChangesAsync();
                 tran.Complete();
             }
         }
 
-        public async void UpdateChannel(Channel channel)
+        public async Task<int> UpdateChannel(Channel channel)
         {
             Context.Channels.Attach(channel);
             Context.Entry(channel).State = EntityState.Modified;
-            await Context.SaveChangesAsync();
+            return await Context.SaveChangesAsync();
         }
 
         #endregion

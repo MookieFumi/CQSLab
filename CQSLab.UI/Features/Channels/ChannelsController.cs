@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Web.ModelBinding;
 using System.Web.Mvc;
 using AutoMapper;
 using CQSLab.Business.Entities;
@@ -42,7 +43,7 @@ namespace CQSLab.UI.Features.Channels
         // POST: Channels/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ChannelVM viewModel)
+        public async Task<ActionResult> Create(ChannelVM viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -50,7 +51,7 @@ namespace CQSLab.UI.Features.Channels
                 {
                     Mapper.CreateMap<ChannelVM, Channel>();
                     var channel = Mapper.Map<ChannelVM, Channel>(viewModel);
-                    _channelsService.AddChannel(channel);
+                    _await channelsService.AddChannel(channel);
 
                     return RedirectToAction("Index");
                 }
@@ -101,7 +102,7 @@ namespace CQSLab.UI.Features.Channels
 
                     Mapper.CreateMap<ChannelEditVM, Channel>();
                     Mapper.Map(viewModel, channel);
-                    _channelsService.UpdateChannel(channel);
+                    await _channelsService.UpdateChannel(channel);
 
                     return RedirectToAction("Edit", new { id = viewModel.ChannelId, success = true });
                 }
@@ -151,7 +152,7 @@ namespace CQSLab.UI.Features.Channels
 
                     Mapper.CreateMap<BudgetEditVM, BudgetChannel>();
                     Mapper.Map(viewModel, budget);
-                    _channelsService.UpdateBudget(budget);
+                     _channelsService.UpdateBudget(budget);
 
                     return RedirectToAction("Budget", new { id = viewModel.ChannelId, viewModel.AccountantPeriod, success = true });
                 }
